@@ -55,18 +55,18 @@ export default class VacationRequests extends LightningElement {
         this.showErrorMessage("Error", "Manager is not specified for current user.");
     }
 
-    showSuccessMessage(title, message) {
+    showSuccessMessage(_title, _message) {
         const toastEvent = new ShowToastEvent({
-            title: title,
-            message: message,
+            title: _title,
+            message: _message,
             variant: "success"
         });
     }
 
-    showErrorMessage(title, message) {
+    showErrorMessage(_title, _message) {
         const toastEvent = new ShowToastEvent({
-            title: title,
-            message: message,
+            title: _title,
+            message: _message,
             variant: "error"
         });
     }
