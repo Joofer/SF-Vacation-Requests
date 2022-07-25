@@ -2,9 +2,7 @@
     <lightning-card title="Vacation Requests" icon-name="standard:survey">
         <div class="slds-m-around_medium">
             <div class="slds-button-group-row" role="group">
-                <li class="slds-button-group-item">
-                    <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
-                </li>
+                <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
             </div>
             <template if:true={vacationRequests}>
                 <template for:each={vacationRequests} for:item="request">
