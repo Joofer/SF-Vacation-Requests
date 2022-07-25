@@ -22,16 +22,14 @@
                     <p class="slds-m-top_x-small">Fill out all these fields to add new vacation request.</p>
                 </header>
 
-                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <!-- Request creation form -->
-                    <lightning-record-form
-                    object-api-name={objectApiName}
-                    fields={objectFields}
-                    onsuccess={handleSuccess}
-                    oncancel={closeModalAddRequest}
-                    >
-                    </lightning-record-form>
-                </div>
+                <!-- Request creation form -->
+                <lightning-record-form
+                object-api-name={objectApiName}
+                fields={objectFields}
+                onsuccess={handleSuccess}
+                oncancel={closeModalAddRequest}
+                >
+                </lightning-record-form>
 
             </div>
         </section>
