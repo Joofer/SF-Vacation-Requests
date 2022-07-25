@@ -56,7 +56,7 @@
                             <td class="slds-cell_action-mode" role="gridcell">
                                 <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" tabindex="0" title="Actions">
                                     <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_small" aria-hidden="true">
-                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
                                     </svg>
                                     <span class="slds-assistive-text">Actions</span>
                                 </button>
@@ -65,6 +65,10 @@
                     </template>
                     </tbody>
                 </table>
+
+                <template for:each={vacationRequests} for:item="request">
+                    <p key={request.Name}>Request Type: {request.RequestType__c} | StartDate: {request.StartDate__c} | EndDate: {request.EndDate__c} | WorkingDays: {request.WorkingDays__c} | Manager: {request.Manager__c} | Status: {request.Status__c}</p>
+                </template>
 
             </template>
         </div>
