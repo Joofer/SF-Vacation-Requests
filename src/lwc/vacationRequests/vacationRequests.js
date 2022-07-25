@@ -29,9 +29,6 @@ export default class VacationRequests extends LightningElement {
             if (data.fields.ManagerId.value != null) {
                 this.managerId = data.fields.ManagerId.value;
             }
-            else {
-                this.showErrorMessage("Error", "Manager is not specified for current user.");
-            }
         }
     }
 
@@ -58,7 +55,7 @@ export default class VacationRequests extends LightningElement {
     }
 
     handleError(event) {
-        this.isSucceed = false;
+        this.showErrorMessage("Error", "Manager is not specified for current user.");
     }
 
     showSuccessMessage(title, message) {

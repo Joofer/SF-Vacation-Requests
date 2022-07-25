@@ -1,14 +1,73 @@
 <template>
-    <lightning-card title="VacationRequests" icon-name="custom:custom63">
+    <lightning-card title="Vacation Requests" icon-name="standard:survey">
         <div class="slds-m-around_medium">
-            <div class="slds-button-group" role="group">
+            <div class="slds-button-group-row" role="group">
                 <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
-                <button class="slds-button slds-button_neutral" onclick={handleLoad}>Refresh</button>
             </div>
             <template if:true={vacationRequests}>
-                <template for:each={vacationRequests} for:item="request">
-                    <p key={request.Name}>Request Type: {request.RequestType__c} | StartDate: {request.StartDate__c} | EndDate: {request.EndDate__c} | WorkingDays: {request.WorkingDays__c} | Manager: {request.Manager__c} | Status: {request.Status__c}</p>
-                </template>
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="Vacation Request">
+                    <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Number">#</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Owner">Owner</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Type">Type</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Dates">Dates</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Manager">Manager</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Status">Status</div>
+                        </th>
+                        <th class="slds-cell_action-mode" scope="col" style="width:3.25rem">
+                            <div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <template for:each={vacationRequests} for:item="request">
+                        <tr key={request.Name} class="slds-hint-parent">
+                            <td data-label="Number">
+                                <div class="slds-truncate" title="Number">{request.Name}</div>
+                            </td>
+                            <td data-label="Owner">
+                                <div class="slds-truncate" title="Owner">{request.OwnerId}</div>
+                            </td>
+                            <td data-label="Type">
+                                <div class="slds-truncate" title="Type">{request.RequestType__c}</div>
+                            </td>
+                            <td data-label="Dates">
+                                <div class="slds-truncate" title="Dates">{request.StartDate__c} - {request.EndDate__c} ({request.WorkingDays__c})</div>
+                            </td>
+                            <td data-label="Manager">
+                                <div class="slds-truncate" title="Manager">{request.Manager__c}</div>
+                            </td>
+                            <td data-label="Status">
+                                <div class="slds-truncate" title="Status">{request.Status__c}</div>
+                            </td>
+                            <td data-label="Actions">
+                                <div class="slds-truncate" title="Actions">
+                                    <div class="slds-button-group-row" role="group">
+                                        <button class="slds-button slds-button_neutral">Submit</button>
+                                        <button class="slds-button slds-button_neutral">Approve</button>
+                                        <button class="slds-button slds-button_neutral">Remove</button>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </template>
+                    </tbody>
+                </table>
+
             </template>
         </div>
     </lightning-card>
@@ -20,17 +79,27 @@
 
                 <header class="slds-modal__header">
                     <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add Request</h1>
-                    <p class="slds-m-top_x-small">Fill out all the fields to add new vacation request.</p>
+                    <p class="slds-m-top_x-small">Fill out all these fields to add new vacation request.</p>
                 </header>
 
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <p>Content</p>
+                    <!-- Request creation form -->
+                    <lightning-record-edit-form object-api-name={objectApiName} onsuccess={handleSuccess}>
+                        <lightning-messages></lightning-messages>
+                        <div class="slds-grid slds-grid_vertical">
+                            <lightning-input-field field-name={typeField}></lightning-input-field>
+                            <lightning-input-field field-name={startDateField}></lightning-input-field>
+                            <lightning-input-field field-name={endDateField}></lightning-input-field>
+                            <lightning-input-field field-name={workingDaysField}></lightning-input-field>
+                            <lightning-input-field field-name={managerField}></lightning-input-field>
+                        </div>
+                        <lightning-button type="submit" variant="brand" label="Create"></lightning-button>
+                    </lightning-record-edit-form>
                 </div>
 
-                <footer class="slds-modal__footer">
-                    <button class="slds-button slds-button_neutral" onclick={closeModalAddRequest} aria-label="Cancel and close">Cancel</button>
-                    <button class="slds-button slds-button_brand" onclick={addRequest}>Save</button>
-                </footer>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModalAddRequest} aria-label="Close">Close</button>
+                </div>
 
             </div>
         </section>
