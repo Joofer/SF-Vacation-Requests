@@ -28,14 +28,10 @@
                     object-api-name={objectApiName}
                     fields={objectFields}
                     onsuccess={handleSuccess}
+                    oncancel={closeModalAddRequest}
                     >
                     </lightning-record-form>
                 </div>
-
-                <footer class="slds-modal__footer">
-                    <button class="slds-button slds-button_neutral" onclick={closeModalAddRequest} aria-label="Cancel and close">Cancel</button>
-                    <button class="slds-button slds-button_brand" onclick={addRequest}>Save</button>
-                </footer>
 
             </div>
         </section>

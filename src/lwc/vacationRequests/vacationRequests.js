@@ -51,8 +51,4 @@ export default class VacationRequests extends LightningElement {
         this.isModalAddRequestShown = false;
     }
 
-    addRequest() {
-
-    }
-
 }
