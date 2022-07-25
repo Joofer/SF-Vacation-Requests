@@ -93,8 +93,10 @@
                             <lightning-input-field field-name={workingDaysField}></lightning-input-field>
                             <lightning-input-field field-name={managerField}></lightning-input-field>
                         </div>
-                        <lightning-button onclick={closeModalAddRequest} variant="neutral" label="Cancel"></lightning-button>
-                        <lightning-button type="submit" variant="brand" label="Create"></lightning-button>
+                        <div class="slds-button-group-row" role="group">
+                            <lightning-button onclick={closeModalAddRequest} variant="neutral" label="Cancel"></lightning-button>
+                            <lightning-button type="submit" variant="brand" label="Create"></lightning-button>
+                        </div>
                     </lightning-record-edit-form>
                 </div>
 
