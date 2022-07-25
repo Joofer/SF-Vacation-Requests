@@ -3,7 +3,6 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
 
 import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
-import ID_FIELD from '@salesforce/schema/Vacation_Request__c.Name';
 import TYPE_FIELD from '@salesforce/schema/Vacation_Request__c.RequestType__c';
 import START_DATE_FIELD from '@salesforce/schema/Vacation_Request__c.StartDate__c';
 import END_DATE_FIELD from '@salesforce/schema/Vacation_Request__c.EndDate__c';
@@ -18,7 +17,7 @@ export default class VacationRequests extends LightningElement {
     @track isModalAddRequestShown = false;
 
     objectApiName = REQUEST_OBJECT;
-    objectFields = [ID_FIELD, TYPE_FIELD, START_DATE_FIELD, END_DATE_FIELD, WORKING_DAYS_FIELD, MANAGER_FIELD, STATUS_FIELD];
+    objectFields = [TYPE_FIELD, START_DATE_FIELD, END_DATE_FIELD, WORKING_DAYS_FIELD, MANAGER_FIELD, STATUS_FIELD];
 
     handleLoad() {
         getVacationRequestList()
