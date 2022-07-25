@@ -23,7 +23,14 @@
                 </header>
 
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <p>Content</p>
+                    <!-- Add request form -->
+                    <lightning-record-form
+                    object-api-name={objectApiName}
+                    fields={objectFields}
+                    onsubmit={addRequest}
+                    >
+                        <lightning-input></lightning-input>
+                    </lightning-record-form>
                 </div>
 
                 <footer class="slds-modal__footer">
