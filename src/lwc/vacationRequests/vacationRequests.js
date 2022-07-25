@@ -23,12 +23,11 @@ export default class VacationRequests extends LightningElement {
 
     @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})
     wireuser({error,data}) {
-
         if (error) {
             this.error = error;
         } else if (data) {
             if (data.fields.ManagerId.value != null) {
-                this.MIdVal = data.fields.ManagerId.value;
+                this.managerId = data.fields.ManagerId.value;
             }
         }
     }
@@ -55,20 +54,22 @@ export default class VacationRequests extends LightningElement {
         this.showErrorMessage("Error", "Manager is not specified for current user.");
     }
 
-    showSuccessMessage(_title, _message) {
+    showSuccessMessage(title, message) {
         const toastEvent = new ShowToastEvent({
-            title: _title,
-            message: _message,
+            title: title,
+            message: message,
             variant: "success"
         });
+        this.dispatchEvent(toastEvent);
     }
 
-    showErrorMessage(_title, _message) {
+    showErrorMessage(title, message) {
         const toastEvent = new ShowToastEvent({
-            title: _title,
-            message: _message,
+            title: title,
+            message: message,
             variant: "error"
         });
+        this.dispatchEvent(toastEvent);
     }
 
     connectedCallback() {
