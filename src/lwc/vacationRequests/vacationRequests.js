@@ -4,9 +4,9 @@ import getVacationRequestList from '@salesforce/apex/VacationRequestsController.
 
 import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
 import REQUESTTYPE_FIELD from '@salesforce/schema/Vacation_Request__c.RequestType__c';
-import START_DATE_FIELD from '@salesforce/schema/Vacation_Request__c.StartDate__c';
-import END_DATE_FIELD from '@salesforce/schema/Vacation_Request__c.EndDate__c';
-import WORKING_DAYS_FIELD from '@salesforce/schema/Vacation_Request__c.WorkingDays__c';
+import STARTDATE_FIELD from '@salesforce/schema/Vacation_Request__c.StartDate__c';
+import ENDDATE_FIELD from '@salesforce/schema/Vacation_Request__c.EndDate__c';
+import WORKINGDAYS_FIELD from '@salesforce/schema/Vacation_Request__c.WorkingDays__c';
 import MANAGER_FIELD from '@salesforce/schema/Vacation_Request__c.Manager__c';
 import STATUS_FIELD from '@salesforce/schema/Vacation_Request__c.Status__c';
 
