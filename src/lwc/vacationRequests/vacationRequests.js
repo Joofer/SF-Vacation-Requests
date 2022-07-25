@@ -32,7 +32,7 @@ export default class VacationRequests extends LightningElement {
     handleSuccess(event) {
         const toastEvent = new ShowToastEvent({
             title: "Request created",
-            message: "Vacation Request id: " + event.details.id,
+            message: "Vacation Request was successfully created!",
             variant: "success"
         });
         this.dispatchEvent(toastEvent);
