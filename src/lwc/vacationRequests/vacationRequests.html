@@ -53,43 +53,20 @@
                             <td data-label="Status">
                                 <div class="slds-truncate" title="Status">{request.Status__c}</div>
                             </td>
-                            <td class="slds-cell_action-mode" role="gridcell">
-                                <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
-                                    <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" aria-expanded="true" title="Actions">
-                                        <svg class="slds-button__icon" aria-hidden="true">
-                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
-                                        </svg>
-                                        <span class="slds-assistive-text">Show More</span>
-                                    </button>
-                                    <div class="slds-dropdown slds-dropdown_left">
-                                        <ul class="slds-dropdown__list" role="menu" aria-label="Actions">
-                                            <li class="slds-dropdown__item" role="presentation">
-                                                <a href="#" role="menuitem" tabindex="0">
-                                                    <span class="slds-truncate" title="Menu Item One">Submit</span>
-                                                </a>
-                                            </li>
-                                            <li class="slds-dropdown__item" role="presentation">
-                                                <a href="#" role="menuitem" tabindex="-1">
-                                                    <span class="slds-truncate" title="Menu Item Two">Approve</span>
-                                                </a>
-                                            </li>
-                                            <li class="slds-dropdown__item" role="presentation">
-                                                <a href="#" role="menuitem" tabindex="-1">
-                                                    <span class="slds-truncate" title="Menu Item Three">Reomove</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                            <td data-label="Actions">
+                                <div class="slds-truncate" title="Actions">
+                                    <div class="slds-button-group-row" role="group">
+                                        <button class="slds-button slds-button_brand">Submit</button>
+                                        <button class="slds-button slds-button_brand">Approve</button>
+                                        <button class="slds-button slds-button_brand">Remove</button>
                                     </div>
                                 </div>
                             </td>
+
                         </tr>
                     </template>
                     </tbody>
                 </table>
-
-                <template for:each={vacationRequests} for:item="request">
-                    <p key={request.Name}>Request Type: {request.RequestType__c} | StartDate: {request.StartDate__c} | EndDate: {request.EndDate__c} | WorkingDays: {request.WorkingDays__c} | Manager: {request.Manager__c} | Status: {request.Status__c}</p>
-                </template>
 
             </template>
         </div>
