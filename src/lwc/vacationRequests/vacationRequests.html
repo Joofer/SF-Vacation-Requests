@@ -34,6 +34,13 @@
                     </lightning-card>
                 </div>
 
+                <template if:true={isSucceed}>
+                    <div class="slds-modal__footer">
+                        <p class="slds-m-top_x-small">Vacation request successfully created!</p>
+                        <button class="slds-button slds-button_neutral" onclick={closeModalAddRequest} aria-label="Close">Close</button>
+                    </div>
+                </template>
+
             </div>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>

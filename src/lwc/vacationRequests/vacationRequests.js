@@ -1,5 +1,4 @@
 import {LightningElement, track} from 'lwc';
-import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
 
 import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
@@ -15,6 +14,7 @@ export default class VacationRequests extends LightningElement {
     @track vacationRequests;
     @track error;
     @track isModalAddRequestShown = false;
+    @track isSucceed = false;
 
     objectApiName = REQUEST_OBJECT;
     fields = [REQUEST_REQUESTTYPE_FIELD, REQUEST_STARTDATE_FIELD, REQUEST_ENDDATE_FIELD, REQUEST_WORKINGDAYS_FIELD, REQUEST_MANAGER_FIELD, REQUEST_STATUS_FIELD];
@@ -30,12 +30,7 @@ export default class VacationRequests extends LightningElement {
     }
 
     handleSuccess(event) {
-        const toastEvent = new ShowToastEvent({
-            title: "Request created",
-            message: "Vacation Request was successfully created!",
-            variant: "success"
-        });
-        this.dispatchEvent(toastEvent);
+        this.isSucceed = true;
     }
 
     connectedCallback() {
@@ -43,6 +38,7 @@ export default class VacationRequests extends LightningElement {
     }
 
     openModalAddRequest() {
+        this.isSucceed = false;
         this.isModalAddRequestShown = true;
     }
 
