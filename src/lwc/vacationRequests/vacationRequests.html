@@ -1,22 +1,26 @@
 <template>
+
     <lightning-card title="Vacation Requests" icon-name="standard:survey">
-        <h1>
-            <span class="slds-page-header__title slds-truncate" title="Vacation Records">Vacation Requests</span>
-        </h1>
-        <div class="slds-m-around_medium">
-            <div class="slds-button-group" role="group">
-                <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
-            </div>
-            <template if:true={vacationRequests}>
-                <template for:each={vacationRequests} for:item="request">
-                    <p key={request.Name}>Request Type: {request.RequestType__c} | StartDate: {request.StartDate__c} | EndDate: {request.EndDate__c} | WorkingDays: {request.WorkingDays__c} | Manager: {request.Manager__c} | Status: {request.Status__c}</p>
+        <div class="slds-card__body">
+            <h1>
+                <span class="slds-page-header__title slds-truncate" title="Vacation Records">Vacation Requests</span>
+            </h1>
+            <div class="slds-m-around_medium">
+                <div class="slds-button-group-row" role="group">
+                    <li class="slds-button-group-item">
+                        <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
+                    </li>
+                </div>
+                <template if:true={vacationRequests}>
+                    <template for:each={vacationRequests} for:item="request">
+                        <p key={request.Name}>Request Type: {request.RequestType__c} | StartDate: {request.StartDate__c} | EndDate: {request.EndDate__c} | WorkingDays: {request.WorkingDays__c} | Manager: {request.Manager__c} | Status: {request.Status__c}</p>
+                    </template>
                 </template>
-            </template>
+            </div>
         </div>
     </lightning-card>
 
     <template if:true={isModalAddRequestShown}>
-
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
 
@@ -38,4 +42,5 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
+
 </template>
