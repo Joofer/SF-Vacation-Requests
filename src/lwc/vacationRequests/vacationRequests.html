@@ -85,12 +85,23 @@
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     <!-- Request creation form -->
                     <lightning-card>
-                        <lightning-record-form
-                                object-api-name={objectApiName}
-                                fields={fields}
-                                oncancel={closeModalAddRequest}
-                                onsuccess={handleSuccess}>
-                        </lightning-record-form>
+                        <lightning-record-edit-form object-api-name={objectApiName} onsuccess={handleSuccess}>
+                            <lightning-messages></lightning-messages>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field field-name={typeField}></lightning-input-field>
+                                    <lightning-input-field field-name={startDateField}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field field-name={endDateField}></lightning-input-field>
+                                    <lightning-input-field field-name={workingDaysField}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field field-name={managerField}></lightning-input-field>
+                                </div>
+                            </div>
+                            <lightning-button type="submit" variant="brand" label="Create Request"></lightning-button>
+                        </lightning-record-edit-form>
                     </lightning-card>
                 </div>
 

@@ -33,7 +33,11 @@ export default class VacationRequests extends LightningElement {
     }
 
     objectApiName = REQUEST_OBJECT;
-    fields = [REQUEST_REQUESTTYPE_FIELD, REQUEST_STARTDATE_FIELD, REQUEST_ENDDATE_FIELD, REQUEST_WORKINGDAYS_FIELD, REQUEST_MANAGER_FIELD];
+    typeField = REQUEST_REQUESTTYPE_FIELD;
+    startDateField = REQUEST_STARTDATE_FIELD;
+    endDateField = REQUEST_ENDDATE_FIELD;
+    workingDaysField = REQUEST_WORKINGDAYS_FIELD;
+    managerField = REQUEST_MANAGER_FIELD;
 
     handleLoad() {
         getVacationRequestList()
