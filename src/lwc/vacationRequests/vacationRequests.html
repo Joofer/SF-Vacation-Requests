@@ -93,18 +93,13 @@
                             <lightning-input-field field-name={workingDaysField}></lightning-input-field>
                             <lightning-input-field field-name={managerField}></lightning-input-field>
                         </div>
-                        <div class="slds-button-group-row" role="group">
-                            <lightning-button onclick={closeModalAddRequest} variant="neutral" label="Cancel"></lightning-button>
-                            <lightning-button type="submit" variant="brand" label="Create"></lightning-button>
-                        </div>
+                        <lightning-button type="submit" variant="brand" label="Create"></lightning-button>
                     </lightning-record-edit-form>
                 </div>
 
-                <template if:true={isSucceed}>
-                    <div class="slds-modal__footer">
-                        <button class="slds-button slds-button_neutral" onclick={closeModalAddRequest} aria-label="Close">Close</button>
-                    </div>
-                </template>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModalAddRequest} aria-label="Close">Close</button>
+                </div>
 
             </div>
         </section>
