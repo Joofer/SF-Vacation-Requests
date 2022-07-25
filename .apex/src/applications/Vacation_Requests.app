@@ -19,7 +19,10 @@
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Vacation Requests</label>
     <navType>Standard</navType>
+    <tabs>standard-home</tabs>
     <tabs>standard-AnalyticsDataManager</tabs>
+    <tabs>standard-CmsAuthorHome</tabs>
+    <tabs>standard-MobileHome</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Vacation_Records_UtilityBar</utilityBar>
 </CustomApplication>
