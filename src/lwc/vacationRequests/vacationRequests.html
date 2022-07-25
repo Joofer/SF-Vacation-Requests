@@ -84,19 +84,18 @@
 
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     <!-- Request creation form -->
-                    <lightning-card>
-                        <lightning-record-edit-form object-api-name={objectApiName} onsuccess={handleSuccess}>
-                            <lightning-messages></lightning-messages>
-                            <div class="slds-grid slds-grid_vertical">
-                                <lightning-input-field field-name={typeField}></lightning-input-field>
-                                <lightning-input-field field-name={startDateField}></lightning-input-field>
-                                <lightning-input-field field-name={endDateField}></lightning-input-field>
-                                <lightning-input-field field-name={workingDaysField}></lightning-input-field>
-                                <lightning-input-field field-name={managerField}></lightning-input-field>
-                            </div>
-                            <lightning-button type="submit" variant="brand" label="Create Request"></lightning-button>
-                        </lightning-record-edit-form>
-                    </lightning-card>
+                    <lightning-record-edit-form object-api-name={objectApiName} onsuccess={handleSuccess}>
+                        <lightning-messages></lightning-messages>
+                        <div class="slds-grid slds-grid_vertical">
+                            <lightning-input-field field-name={typeField}></lightning-input-field>
+                            <lightning-input-field field-name={startDateField}></lightning-input-field>
+                            <lightning-input-field field-name={endDateField}></lightning-input-field>
+                            <lightning-input-field field-name={workingDaysField}></lightning-input-field>
+                            <lightning-input-field field-name={managerField}></lightning-input-field>
+                        </div>
+                        <lightning-button onclick={closeModalAddRequest} variant="neutral" label="Cancel"></lightning-button>
+                        <lightning-button type="submit" variant="brand" label="Create"></lightning-button>
+                    </lightning-record-edit-form>
                 </div>
 
                 <template if:true={isSucceed}>
