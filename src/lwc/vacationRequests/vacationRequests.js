@@ -31,6 +31,7 @@ export default class VacationRequests extends LightningElement {
 
     handleSuccess(event) {
         this.isSucceed = true;
+        this.handleLoad();
     }
 
     connectedCallback() {

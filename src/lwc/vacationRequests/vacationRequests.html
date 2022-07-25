@@ -5,9 +5,68 @@
                 <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
             </div>
             <template if:true={vacationRequests}>
-                <template for:each={vacationRequests} for:item="request">
-                    <p key={request.Name}>Request Type: {request.RequestType__c} | StartDate: {request.StartDate__c} | EndDate: {request.EndDate__c} | WorkingDays: {request.WorkingDays__c} | Manager: {request.Manager__c} | Status: {request.Status__c}</p>
-                </template>
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="Vacation Request">
+                    <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Number">#</div>
+                        </th>
+                        REQUEST_REQUESTTYPE_FIELD, REQUEST_STARTDATE_FIELD, REQUEST_ENDDATE_FIELD, REQUEST_WORKINGDAYS_FIELD, REQUEST_MANAGER_FIELD, REQUEST_STATUS_FIELD
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Owner">Owner</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Type">Type</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Dates">Dates</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Manager">Manager</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Status">Status</div>
+                        </th>
+                        <th class="slds-cell_action-mode" scope="col" style="width:3.25rem">
+                            <div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <template for:each={vacationRequests} for:item="request">
+                        <tr key={request.Name} class="slds-hint-parent">
+                            <td data-label="Number">
+                                <div class="slds-truncate" title="Number">{request.Name}</div>
+                            </td>
+                            <td data-label="Owner">
+                                <div class="slds-truncate" title="Owner">{request.Owner}</div>
+                            </td>
+                            <td data-label="Type">
+                                <div class="slds-truncate" title="Type">{request.RequestType__c}</div>
+                            </td>
+                            <td data-label="Dates">
+                                <div class="slds-truncate" title="Dates">{request.StartDate__c} - {request.EndDate__c} ({request.WorkingDays__c})</div>
+                            </td>
+                            <td data-label="Manager">
+                                <div class="slds-truncate" title="Manager">{request.Manager__c}</div>
+                            </td>
+                            <td data-label="Status">
+                                <div class="slds-truncate" title="Status">{request.Status__c}</div>
+                            </td>
+                            <td class="slds-cell_action-mode" role="gridcell">
+                                <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" tabindex="0" title="Actions">
+                                    <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_small" aria-hidden="true">
+                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Actions</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </template>
+                    </tbody>
+                </table>
+
             </template>
         </div>
     </lightning-card>
