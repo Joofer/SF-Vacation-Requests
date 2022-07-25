@@ -1,4 +1,8 @@
-import {LightningElement, track} from 'lwc';
+import {LightningElement, track, wire} from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import UsrId from '@salesforce/user/Id';
+import UsrManagerId from '@salesforce/schema/User.ManagerId';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
 
 import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
@@ -7,7 +11,6 @@ import REQUEST_STARTDATE_FIELD from '@salesforce/schema/Vacation_Request__c.Star
 import REQUEST_ENDDATE_FIELD from '@salesforce/schema/Vacation_Request__c.EndDate__c';
 import REQUEST_WORKINGDAYS_FIELD from '@salesforce/schema/Vacation_Request__c.WorkingDays__c';
 import REQUEST_MANAGER_FIELD from '@salesforce/schema/Vacation_Request__c.Manager__c';
-import REQUEST_STATUS_FIELD from '@salesforce/schema/Vacation_Request__c.Status__c';
 
 export default class VacationRequests extends LightningElement {
 
@@ -16,8 +19,22 @@ export default class VacationRequests extends LightningElement {
     @track isModalAddRequestShown = false;
     @track isSucceed = false;
 
+    @track managerId;
+
+    @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})
+    wireuser({error,data}) {
+
+        if (error) {
+            this.error = error;
+        } else if (data) {
+            if (data.fields.ManagerId.value != null) {
+                this.MIdVal = data.fields.ManagerId.value;
+            }
+        }
+    }
+
     objectApiName = REQUEST_OBJECT;
-    fields = [REQUEST_REQUESTTYPE_FIELD, REQUEST_STARTDATE_FIELD, REQUEST_ENDDATE_FIELD, REQUEST_WORKINGDAYS_FIELD, REQUEST_MANAGER_FIELD, REQUEST_STATUS_FIELD];
+    fields = [REQUEST_REQUESTTYPE_FIELD, REQUEST_STARTDATE_FIELD, REQUEST_ENDDATE_FIELD, REQUEST_WORKINGDAYS_FIELD, REQUEST_MANAGER_FIELD];
 
     handleLoad() {
         getVacationRequestList()
@@ -30,8 +47,28 @@ export default class VacationRequests extends LightningElement {
     }
 
     handleSuccess(event) {
+        this.showSuccessMessage("Success", "Vacation request was successfully created!");
         this.isSucceed = true;
-        this.handleLoad();
+    }
+
+    handleError(event) {
+        this.showErrorMessage("Error", "Manager is not specified for current user.");
+    }
+
+    showSuccessMessage(title, message) {
+        const toastEvent = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: "success"
+        });
+    }
+
+    showErrorMessage(title, message) {
+        const toastEvent = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: "error"
+        });
     }
 
     connectedCallback() {
