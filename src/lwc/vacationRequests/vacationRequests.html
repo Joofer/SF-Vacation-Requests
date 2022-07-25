@@ -1,0 +1,39 @@
+<template>
+    <lightning-card title="VacationRequests" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <div class="slds-button-group" role="group">
+                <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
+                <button class="slds-button slds-button_neutral" onclick={handleLoad}>Refresh</button>
+            </div>
+            <template if:true={vacationRequests}>
+                <template for:each={vacationRequests} for:item="request">
+                    <p key={request.Name}>Request Type: {request.RequestType__c} | StartDate: {request.StartDate__c} | EndDate: {request.EndDate__c} | WorkingDays: {request.WorkingDays__c} | Manager: {request.Manager__c} | Status: {request.Status__c}</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+
+    <template if:true={isModalAddRequestShown}>
+
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add Request</h1>
+                    <p class="slds-m-top_x-small">Fill out all the fields to add new vacation request.</p>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>Content</p>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModalAddRequest} aria-label="Cancel and close">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={addRequest}>Save</button>
+                </footer>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
