@@ -4,6 +4,11 @@ import getVacationRequestList from '@salesforce/apex/VacationRequestsController.
 
 import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
 import TYPE_FIELD from '@salesforce/schema/Vacation_Request__c.RequestType__c';
+import START_DATE_FIELD from '@salesforce/schema/Vacation_Request__c.StartDate__c';
+import END_DATE_FIELD from '@salesforce/schema/Vacation_Request__c.EndDate__c';
+import WORKING_DAYS_FIELD from '@salesforce/schema/Vacation_Request__c.WorkingDays__c';
+import MANAGER_FIELD from '@salesforce/schema/Vacation_Request__c.Manager__c';
+import STATUS_FIELD from '@salesforce/schema/Vacation_Request__c.Status__c';
 
 export default class VacationRequests extends LightningElement {
 
@@ -12,7 +17,7 @@ export default class VacationRequests extends LightningElement {
     @track isModalAddRequestShown = false;
 
     objectApiName = REQUEST_OBJECT;
-    objectFields = [TYPE_FIELD];
+    objectFields = [TYPE_FIELD, START_DATE_FIELD, END_DATE_FIELD, WORKING_DAYS_FIELD, MANAGER_FIELD, STATUS_FIELD];
 
     handleLoad() {
         getVacationRequestList()
