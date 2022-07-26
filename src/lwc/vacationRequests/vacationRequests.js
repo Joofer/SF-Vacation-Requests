@@ -118,9 +118,6 @@ export default class VacationRequests extends LightningElement {
         }
     }
 
-    @wire(approveVacationRequest, { requestId: this.approveRequestId }) approveRequestResult;
-    @wire(removeVacationRequest, { requestId: this.removeRequestId }) removeRequestResult;
-
     submitRequest(event) {
         this.submitRequestId = event.currentTarget.dataset.id;
     }
