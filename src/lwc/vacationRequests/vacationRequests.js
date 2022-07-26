@@ -25,7 +25,6 @@ export default class VacationRequests extends LightningElement {
     @track vacationRequests;
     @track error;
     @track isModalAddRequestShown = false;
-    @track isSucceed = false;
 
     objectApiName = REQUEST_OBJECT;
     typeField = REQUEST_REQUESTTYPE_FIELD;
@@ -38,8 +37,8 @@ export default class VacationRequests extends LightningElement {
     vacationRequests;
 
     handleSuccess(event) {
+        this.closeModalAddRequest();
         this.showSuccessMessage("Success", "Vacation request was successfully created!");
-        this.isSucceed = true;
         this.updateRequestRecords();
     }
 
@@ -79,7 +78,6 @@ export default class VacationRequests extends LightningElement {
     // Request creation modal
 
     openModalAddRequest() {
-        this.isSucceed = false;
         this.isModalAddRequestShown = true;
     }
 
