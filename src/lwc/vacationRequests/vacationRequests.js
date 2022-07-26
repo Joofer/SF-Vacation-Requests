@@ -98,13 +98,13 @@ export default class VacationRequests extends LightningElement {
 
     // Request actions
 
-    submitRequestId = null;
-    approveRequestId = null;
-    removeRequestId = null;
+    submitRequestId = -1;
+    approveRequestId = -1;
+    removeRequestId = -1;
 
     @wire(submitVacationRequest, { requestId: this.submitRequestId })
     wiredSubmitRequest({error, data}) {
-        if (this.submitRequestId) {
+        if (this.submitRequestId != -1) {
             if (data) {
                 if (data[0] === true) {
                     this.showSuccessMessage("Success", "Vacation request #" + this.submitRequestId + " was submitted.");
