@@ -46,6 +46,9 @@ export default class VacationRequests extends LightningElement {
     workingDaysField = REQUEST_WORKINGDAYS_FIELD;
     managerField = REQUEST_MANAGER_FIELD;
 
+    @wire(getVacationRequestList)
+    vacationRequests;
+
     handleLoad() {
         getVacationRequestList()
             .then(result => {
@@ -84,7 +87,7 @@ export default class VacationRequests extends LightningElement {
     }
 
     connectedCallback() {
-        this.handleLoad();
+        // this.handleLoad();
     }
 
     // Request creation modal
