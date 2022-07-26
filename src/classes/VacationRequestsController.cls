@@ -2,14 +2,19 @@ public class VacationRequestsController {
 
 	// Class for storing visibility settings for all requests
 	public class ActionsVisibility {
+		@AuraEnabled
 		public Boolean isSubmitVisible;
+		@AuraEnabled
 		public Boolean isApproveVisible;
+		@AuraEnabled
 		public Boolean isRemoveVisible;
 	}
 
 	// Class for returning requests as a single object containing requests and actions visibility settings
 	public class RequestPair {
+		@AuraEnabled
 		public Vacation_Request__c request;
+		@AuraEnabled
 		public ActionsVisibility visibility;
 
 		public RequestPair(Vacation_Request__c request, ActionsVisibility visibility) {
