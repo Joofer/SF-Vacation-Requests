@@ -1,14 +1,14 @@
 public class VacationRequestsController {
 
 	// Class for storing visibility settings for all requests
-	private class ActionsVisibility {
+	public class ActionsVisibility {
 		public Boolean isSubmitVisible;
 		public Boolean isApproveVisible;
 		public Boolean isRemoveVisible;
 	}
 
 	// Class for returning requests as a single object containing requests and actions visibility settings
-	private class RequestPair {
+	public class RequestPair {
 		public Vacation_Request__c request;
 		public ActionsVisibility visibility;
 
