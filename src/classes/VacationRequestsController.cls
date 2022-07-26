@@ -22,7 +22,7 @@ public class VacationRequestsController {
 	@AuraEnabled(cacheable=true)
 	public static List<RequestPair> getVacationRequestList(Boolean isOnlyMy) {
 		List<RequestPair> vacationRequests = new List<RequestPair>();
-		List<Vacation_Request__c> result = new List<Vacation_Request__c>();
+		List<Vacation_Request__c> requests = new List<Vacation_Request__c>();
 		List<ActionsVisibility> visibilities = new List<ActionsVisibility>();
 
 		// Get current user id
@@ -30,15 +30,15 @@ public class VacationRequestsController {
 
 		// Get filtered requests
 		if (!isOnlyMy) {
-			result = [
-					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
+			requests = [
+					SELECT Name, OwnerId, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
 					FROM Vacation_Request__c
 					WITH SECURITY_ENFORCED
 					ORDER BY Name ASC
 			];
 		} else {
-			result = [
-					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
+			requests = [
+					SELECT Name, OwnerId, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
 					FROM Vacation_Request__c
 					WHERE Manager__c = :currentId
 					WITH SECURITY_ENFORCED
@@ -47,7 +47,7 @@ public class VacationRequestsController {
 		}
 
 		// Assign actions visibility settings for each request
-		for (Vacation_Request__c request : result) {
+		for (Vacation_Request__c request : requests) {
 			ActionsVisibility actionsVisibility = new ActionsVisibility();
 
 			if (request.Status__c == 'Submitted' || request.CreatedById != currentId) {
@@ -72,8 +72,8 @@ public class VacationRequestsController {
 		}
 
 		// Create list of request and visibility settings pairs
-		for (Integer i = 0; i < result.size(); i++) {
-			vacationRequests.add(new RequestPair(result[i], visibilities[i]));
+		for (Integer i = 0; i < requests.size(); i++) {
+			vacationRequests.add(new RequestPair(requests[i], visibilities[i]));
 		}
 
 		return vacationRequests;
