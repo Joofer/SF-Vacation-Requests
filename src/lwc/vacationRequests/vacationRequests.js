@@ -1,9 +1,11 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
-import UsrId from '@salesforce/user/Id';
-import UsrManagerId from '@salesforce/schema/User.ManagerId';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+
+// User info
+import Id from '@salesforce/user/Id';
+import ManagerId from '@salesforce/schema/User.Manager.Id';
 
 // VacationRequestsController imports
 import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
@@ -147,14 +149,15 @@ export default class VacationRequests extends LightningElement {
 
     @track managerId;
 
-    @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})
-    wireUser({error,data}) {
+    @wire(getRecord, { recordId: Id, fields: [ManagerId] })
+    userDetails({ error, data }) {
         if (error) {
             this.error = error;
-            this.showErrorMessage("Error", "Manager is not specified for current user.");
         } else if (data) {
-            if (data.fields.ManagerId.value != null) {
-                this.managerId = data.fields.ManagerId.value;
+            if (data.fields.Manager.value != null) {
+                this.managerId = data.fields.Manager.value.fields.Id.value;
+            } else {
+                this.showErrorMessage("Error", "Manager is not specified for current user.");
             }
         }
     }
