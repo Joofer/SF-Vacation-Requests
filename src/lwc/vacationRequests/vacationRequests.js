@@ -143,9 +143,9 @@ export default class VacationRequests extends LightningElement {
         getUserName({ requestId: userId })
             .then((result) => {
                 if (result.length > 0) {
-                    this.template.querySelector("p[data-id=" + event.currentTarget.dataset.id + "]").value = result[0].Name;
+                    this.template.querySelector("div[data-id=" + event.currentTarget.dataset.id + "]").value = result[0].Name;
                 } else {
-                    this.template.querySelector("p[data-id=" + event.currentTarget.dataset.id + "]").value = userId;
+                    this.template.querySelector("div[data-id=" + event.currentTarget.dataset.id + "]").value = userId;
                 }
             })
             .catch((error) => {
