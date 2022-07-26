@@ -145,9 +145,9 @@ export default class VacationRequests extends LightningElement {
         getUserName({ requestId: userId })
             .then((result) => {
                 if (result.length > 0) {
-                    this.userName = result[0].Name;
+                    this.userName = 'result[0]';
                 } else {
-                    this.userName = userId;
+                    this.userName = 'userId';
                 }
             })
             .catch((error) => {
