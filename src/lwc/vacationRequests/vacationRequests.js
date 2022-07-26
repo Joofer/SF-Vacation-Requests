@@ -107,10 +107,10 @@ export default class VacationRequests extends LightningElement {
                 if (result == true)
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
                 else
-                    this.showErrorMessage("Error", "Unable to find request #" + selectedRequestId + ".");
+                    this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
             })
             .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
+                this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + " (" + error.message + ").");
                 this.error = error;
             });
     }
@@ -122,10 +122,10 @@ export default class VacationRequests extends LightningElement {
                 if (result == true)
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was approved.");
                 else
-                    this.showErrorMessage("Error", "Unable to find request #" + selectedRequestId + ".");
+                    this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
             })
             .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
+                this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + " (" + error.message + ").");
                 this.error = error;
             });
     }
@@ -137,10 +137,10 @@ export default class VacationRequests extends LightningElement {
                 if (result == true)
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was removed.");
                 else
-                    this.showErrorMessage("Error", "Unable to find request #" + selectedRequestId + ".");
+                    this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
             })
             .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
+                this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + " (" + error.message + ").");
                 this.error = error;
             });
     }
