@@ -1,34 +1,29 @@
 public class VacationRequestsController {
 
-	// Class for storing visibility settings for all requests
-	public class ActionsVisibility {
-		@AuraEnabled
-		public Boolean isSubmitVisible;
-		@AuraEnabled
-		public Boolean isApproveVisible;
-		@AuraEnabled
-		public Boolean isRemoveVisible;
-	}
-
 	// Class for returning requests as a single object containing requests and actions visibility settings
-	public class RequestPair {
+	public class Request {
 		@AuraEnabled
-		public Vacation_Request__c request;
+		public Vacation_Request__c request { get; set; }
 		@AuraEnabled
-		public ActionsVisibility visibility;
+		public Boolean isSubmitVisible { get; set; }
+		@AuraEnabled
+		public Boolean isApproveVisible { get; set; }
+		@AuraEnabled
+		public Boolean isRemoveVisible { get; set; }
 
-		public RequestPair(Vacation_Request__c request, ActionsVisibility visibility) {
+		public Request(Vacation_Request__c request, Boolean isSubmitVisible, Boolean isApproveVisible, Boolean isRemoveVisible) {
 			this.request = request;
-			this.visibility = visibility;
+			this.isSubmitVisible = isSubmitVisible;
+			this.isApproveVisible = isApproveVisible;
+			this.isRemoveVisible = isRemoveVisible;
 		}
 	}
 
 	// Get all vacation requests in an ascending order
 	@AuraEnabled(cacheable=true)
-	public static List<RequestPair> getVacationRequestList(Boolean isOnlyMy) {
-		List<RequestPair> vacationRequests = new List<RequestPair>();
+	public static List<Request> getVacationRequestList(Boolean isOnlyMy) {
+		List<Request> vacationRequests = new List<Request>();
 		List<Vacation_Request__c> requests = new List<Vacation_Request__c>();
-		List<ActionsVisibility> visibilities = new List<ActionsVisibility>();
 
 		// Get current user id
 		String currentId = UserInfo.getUserId();
@@ -53,32 +48,28 @@ public class VacationRequestsController {
 
 		// Assign actions visibility settings for each request
 		for (Vacation_Request__c request : requests) {
-			ActionsVisibility actionsVisibility = new ActionsVisibility();
+			Boolean isSubmitVisible, isApproveVisible, isRemoveVisible;
 
 			if (request.Status__c == 'Submitted' || request.CreatedById != currentId) {
-				actionsVisibility.isSubmitVisible = false;
+				isSubmitVisible = false;
 			} else {
-				actionsVisibility.isSubmitVisible = true;
+				isSubmitVisible = true;
 			}
 
 			if (request.Status__c == 'Approved' || request.Manager__c != currentId) {
-				actionsVisibility.isApproveVisible = false;
+				isApproveVisible = false;
 			} else {
-				actionsVisibility.isApproveVisible = true;
+				isApproveVisible = true;
 			}
 
 			if (request.CreatedById != currentId || request.Status__c != 'New') {
-				actionsVisibility.isRemoveVisible = false;
+				isRemoveVisible = false;
 			} else {
-				actionsVisibility.isRemoveVisible = true;
+				isRemoveVisible = true;
 			}
 
-			visibilities.add(actionsVisibility);
-		}
-
-		// Create list of request and visibility settings pairs
-		for (Integer i = 0; i < requests.size(); i++) {
-			vacationRequests.add(new RequestPair(requests[i], visibilities[i]));
+			// Create list of request and visibility settings pairs
+			vacationRequests.add(new Request(request, isSubmitVisible, isApproveVisible, isRemoveVisible));
 		}
 
 		return vacationRequests;
