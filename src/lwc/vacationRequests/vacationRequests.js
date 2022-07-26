@@ -146,8 +146,8 @@ export default class VacationRequests extends LightningElement {
         getUserManager({ userId: Id })
             .then((result) => {
                 if (result != null) {
-                    this.showSuccessMessage("Success", "Manager for current user: " + result.value + ".");
-                    this.userManager = result.value;
+                    this.showSuccessMessage("Success", "Manager for current user: " + result.ManagerId + ".");
+                    this.userManager = result.ManagerId;
                 } else {
                     this.showErrorMessage("Error", "Manager is not specified for current user.");
                 }
