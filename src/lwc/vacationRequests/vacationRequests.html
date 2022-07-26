@@ -56,9 +56,9 @@
                             <td data-label="Actions">
                                 <div class="slds-truncate" title="Actions">
                                     <div class="slds-button-group-row" role="group">
-                                        <button class="slds-button slds-button_neutral">Submit</button>
-                                        <button class="slds-button slds-button_neutral">Approve</button>
-                                        <button class="slds-button slds-button_neutral">Remove</button>
+                                        <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={submitRequest}>Submit</button>
+                                        <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={approveRequest}>Approve</button>
+                                        <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={removeRequest}>Remove</button>
                                     </div>
                                 </div>
                             </td>
@@ -91,7 +91,7 @@
                             <lightning-input-field field-name={startDateField}></lightning-input-field>
                             <lightning-input-field field-name={endDateField}></lightning-input-field>
                             <lightning-input-field field-name={workingDaysField}></lightning-input-field>
-                            <lightning-input-field field-name={managerField} value={managerId}></lightning-input-field>
+                            <lightning-input-field field-name={managerField}></lightning-input-field>
                         </div>
                         <lightning-button type="submit" variant="brand" label="Create"></lightning-button>
                     </lightning-record-edit-form>

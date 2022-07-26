@@ -1,10 +1,17 @@
-import {LightningElement, track, wire} from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import UsrId from '@salesforce/user/Id';
 import UsrManagerId from '@salesforce/schema/User.ManagerId';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
 
+// VacationRequestsController imports
+import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
+import getFilteredVacationRequestList from '@salesforce/apex/VacationRequestsController.getFilteredVacationRequestList';
+import submitVacationRequest from '@salesforce/apex/VacationRequestsController.submitVacationRequest';
+import approveVacationRequest from '@salesforce/apex/VacationRequestsController.approveVacationRequest';
+import removeVacationRequest from '@salesforce/apex/VacationRequestsController.removeVacationRequest';
+
+// Schema imports
 import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
 import REQUEST_REQUESTTYPE_FIELD from '@salesforce/schema/Vacation_Request__c.RequestType__c';
 import REQUEST_STARTDATE_FIELD from '@salesforce/schema/Vacation_Request__c.StartDate__c';
@@ -20,6 +27,8 @@ export default class VacationRequests extends LightningElement {
     @track isSucceed = false;
 
     @track managerId;
+
+    @track selectedRequestId;
 
     @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})
     wireuser({error,data}) {
@@ -87,6 +96,39 @@ export default class VacationRequests extends LightningElement {
 
     closeModalAddRequest() {
         this.isModalAddRequestShown = false;
+    }
+
+    submitRequest(event) {
+        submitVacationRequest({ requestId: this.selectedRequestId })
+            .then((result) => {
+                this.showSuccessMessage("Success", "Vacation request #" + this.selectedRequestId + " was submitted.");
+            })
+            .catch((error) => {
+                this.showErrorMessage("Error", "Something went wrong when submitting request #" + this.selectedRequestId + ".");
+                this.error = error;
+            });
+    }
+
+    approveRequest(event) {
+        approveVacationRequest({ requestId: this.selectedRequestId })
+            .then((result) => {
+                this.showSuccessMessage("Success", "Vacation request #" + this.selectedRequestId + " was approved.");
+            })
+            .catch((error) => {
+                this.showErrorMessage("Error", "Something went wrong when approving request #" + this.selectedRequestId + ".");
+                this.error = error;
+            });
+    }
+
+    removeRequest(event) {
+        removeVacationRequest({ requestId: this.selectedRequestId })
+            .then((result) => {
+                this.showSuccessMessage("Success", "Vacation request #" + this.selectedRequestId + " was removed.");
+            })
+            .catch((error) => {
+                this.showErrorMessage("Error", "Something went wrong when removing request #" + this.selectedRequestId + ".");
+                this.error = error;
+            });
     }
 
 }
