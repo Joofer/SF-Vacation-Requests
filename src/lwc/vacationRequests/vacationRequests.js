@@ -84,10 +84,6 @@ export default class VacationRequests extends LightningElement {
         this.dispatchEvent(toastEvent);
     }
 
-    connectedCallback() {
-        // this.handleLoad();
-    }
-
     // Request creation modal
 
     openModalAddRequest() {
