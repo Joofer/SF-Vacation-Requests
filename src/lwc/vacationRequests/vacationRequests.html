@@ -1,11 +1,11 @@
 <template>
     <lightning-card title="Vacation Requests" icon-name="standard:survey">
         <div class="slds-m-around_medium">
-            <ul class="slds-list_horizontal slds-has-inline-block-links_space">
-                <li>
+            <ul class="slds-button-group-row">
+                <li class="slds-button-group-item">
                     <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
                 </li>
-                <li>
+                <li class="slds-button-group-item">
                     <lightning-input type="checkbox" label="Only my" onchange={getOnlyMyRequests}></lightning-input>
                 </li>
             </ul>
