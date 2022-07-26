@@ -1,10 +1,18 @@
-import {LightningElement, track, wire} from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import UsrId from '@salesforce/user/Id';
-import UsrManagerId from '@salesforce/schema/User.ManagerId';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
+import { refreshApex } from '@salesforce/apex';
 
+// User info
+import Id from '@salesforce/user/Id';
+
+// VacationRequestsController imports
+import getUserManager from '@salesforce/apex/VacationRequestsController.getUserManager';
+import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
+import submitVacationRequest from '@salesforce/apex/VacationRequestsController.submitVacationRequest';
+import approveVacationRequest from '@salesforce/apex/VacationRequestsController.approveVacationRequest';
+import removeVacationRequest from '@salesforce/apex/VacationRequestsController.removeVacationRequest';
+
+// Schema imports
 import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
 import REQUEST_REQUESTTYPE_FIELD from '@salesforce/schema/Vacation_Request__c.RequestType__c';
 import REQUEST_STARTDATE_FIELD from '@salesforce/schema/Vacation_Request__c.StartDate__c';
@@ -17,20 +25,6 @@ export default class VacationRequests extends LightningElement {
     @track vacationRequests;
     @track error;
     @track isModalAddRequestShown = false;
-    @track isSucceed = false;
-
-    @track managerId;
-
-    @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})
-    wireuser({error,data}) {
-        if (error) {
-            this.error = error;
-        } else if (data) {
-            if (data.fields.ManagerId.value != null) {
-                this.managerId = data.fields.ManagerId.value;
-            }
-        }
-    }
 
     objectApiName = REQUEST_OBJECT;
     typeField = REQUEST_REQUESTTYPE_FIELD;
@@ -39,24 +33,29 @@ export default class VacationRequests extends LightningElement {
     workingDaysField = REQUEST_WORKINGDAYS_FIELD;
     managerField = REQUEST_MANAGER_FIELD;
 
-    handleLoad() {
-        getVacationRequestList()
-            .then(result => {
-                this.vacationRequests = result;
-            })
-            .catch(error => {
-                this.error = error;
-            });
-    }
+    @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
+    vacationRequests;
 
     handleSuccess(event) {
+        this.closeModalAddRequest();
         this.showSuccessMessage("Success", "Vacation request was successfully created!");
-        this.isSucceed = true;
+        this.updateRequestRecords();
     }
 
-    handleError(event) {
-        this.showErrorMessage("Error", "Manager is not specified for current user.");
+    updateRequestRecords(object) {
+        refreshApex(this.vacationRequests);
     }
+
+    // Requests filter
+
+    isOnlyMyRequests = false;
+
+    getOnlyMyRequests(event) {
+        this.isOnlyMyRequests = event.target.checked;
+        this.updateRequestRecords();
+    }
+
+    // Toast messages
 
     showSuccessMessage(title, message) {
         const toastEvent = new ShowToastEvent({
@@ -76,17 +75,86 @@ export default class VacationRequests extends LightningElement {
         this.dispatchEvent(toastEvent);
     }
 
-    connectedCallback() {
-        this.handleLoad();
-    }
+    // Request creation modal
 
     openModalAddRequest() {
-        this.isSucceed = false;
         this.isModalAddRequestShown = true;
     }
 
     closeModalAddRequest() {
         this.isModalAddRequestShown = false;
+    }
+
+    // Request actions
+
+    submitRequest(event) {
+        let selectedRequestId = event.currentTarget.dataset.id;
+        submitVacationRequest({ requestId: selectedRequestId })
+            .then((result) => {
+                if (result === true) {
+                    this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
+                    this.updateRequestRecords();
+                } else {
+                    this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
+                }
+            })
+            .catch((error) => {
+                this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + " (" + error.message + ").");
+                this.error = error;
+            });
+    }
+
+    approveRequest(event) {
+        let selectedRequestId = event.currentTarget.dataset.id;
+        approveVacationRequest({ requestId: selectedRequestId })
+            .then((result) => {
+                if (result === true) {
+                    this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was approved.");
+                    this.updateRequestRecords();
+                } else {
+                    this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
+                }
+            })
+            .catch((error) => {
+                this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + " (" + error.message + ").");
+                this.error = error;
+            });
+    }
+
+    removeRequest(event) {
+        let selectedRequestId = event.currentTarget.dataset.id;
+        removeVacationRequest({ requestId: selectedRequestId })
+            .then((result) => {
+                if (result === true) {
+                    this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was removed.");
+                    this.updateRequestRecords();
+                } else {
+                    this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
+                }
+            })
+            .catch((error) => {
+                this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + " (" + error.message + ").");
+                this.error = error;
+            });
+    }
+
+    // Request processing
+
+    @track userManager;
+
+    getManager() {
+        getUserManager({ userId: Id })
+            .then((result) => {
+                if (result != null) {
+                    this.userManager = result.ManagerId;
+                } else {
+                    this.showErrorMessage("Error", "Manager is not specified for current user.");
+                }
+            })
+            .catch((error) => {
+                this.showErrorMessage("Error", "Something went wrong when getting user's manager.");
+                this.error = error;
+            });
     }
 
 }

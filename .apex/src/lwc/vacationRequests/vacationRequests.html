@@ -1,11 +1,15 @@
 <template>
     <lightning-card title="Vacation Requests" icon-name="standard:survey">
         <div class="slds-m-around_medium">
-            <div class="slds-button-group-row" role="group">
-                <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
-            </div>
-            <template if:true={vacationRequests}>
-
+            <ul class="slds-button-group-row">
+                <li class="slds-button-group-item">
+                    <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
+                </li>
+                <li class="slds-button-group-item">
+                    <lightning-input type="checkbox" label="Only my" onchange={getOnlyMyRequests}></lightning-input>
+                </li>
+            </ul>
+            <template if:true={vacationRequests.data}>
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="Vacation Request">
                     <thead>
                     <tr class="slds-line-height_reset">
@@ -33,41 +37,45 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <template for:each={vacationRequests} for:item="request">
-                        <tr key={request.Name} class="slds-hint-parent">
+                    <template for:each={vacationRequests.data} for:item="requestItem">
+                        <tr key={requestItem.request.Name} class="slds-hint-parent">
                             <td data-label="Number">
-                                <div class="slds-truncate" title="Number">{request.Name}</div>
+                                <div class="slds-truncate" title="Number">{requestItem.request.Name}</div>
                             </td>
                             <td data-label="Owner">
-                                <div class="slds-truncate" title="Owner">{request.OwnerId}</div>
+                                <div class="slds-truncate" title="Owner">{requestItem.request.OwnerId}</div>
                             </td>
                             <td data-label="Type">
-                                <div class="slds-truncate" title="Type">{request.RequestType__c}</div>
+                                <div class="slds-truncate" title="Type">{requestItem.request.RequestType__c}</div>
                             </td>
                             <td data-label="Dates">
-                                <div class="slds-truncate" title="Dates">{request.StartDate__c} - {request.EndDate__c} ({request.WorkingDays__c})</div>
+                                <div class="slds-truncate" title="Dates">{requestItem.request.StartDate__c} - {requestItem.request.EndDate__c} ({requestItem.request.WorkingDays__c})</div>
                             </td>
                             <td data-label="Manager">
-                                <div class="slds-truncate" title="Manager">{request.Manager__c}</div>
+                                <div class="slds-truncate" title="Manager">{requestItem.request.Manager__r.Name}</div>
                             </td>
                             <td data-label="Status">
-                                <div class="slds-truncate" title="Status">{request.Status__c}</div>
+                                <div class="slds-truncate" title="Status">{requestItem.request.Status__c}</div>
                             </td>
                             <td data-label="Actions">
                                 <div class="slds-truncate" title="Actions">
                                     <div class="slds-button-group-row" role="group">
-                                        <button class="slds-button slds-button_neutral">Submit</button>
-                                        <button class="slds-button slds-button_neutral">Approve</button>
-                                        <button class="slds-button slds-button_neutral">Remove</button>
+                                        <template if:true={requestItem.isSubmitVisible}>
+                                            <button class="slds-button slds-button_neutral" data-id={requestItem.request.Name} onclick={submitRequest}>Submit</button>
+                                        </template>
+                                        <template if:true={requestItem.isApproveVisible}>
+                                            <button class="slds-button slds-button_neutral" data-id={requestItem.request.Name} onclick={approveRequest}>Approve</button>
+                                        </template>
+                                        <template if:true={requestItem.isRemoveVisible}>
+                                            <button class="slds-button slds-button_neutral" data-id={requestItem.request.Name} onclick={removeRequest}>Remove</button>
+                                        </template>
                                     </div>
                                 </div>
                             </td>
-
                         </tr>
                     </template>
                     </tbody>
                 </table>
-
             </template>
         </div>
     </lightning-card>
@@ -84,14 +92,14 @@
 
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     <!-- Request creation form -->
-                    <lightning-record-edit-form object-api-name={objectApiName} onsuccess={handleSuccess}>
+                    <lightning-record-edit-form object-api-name={objectApiName} onload={getManager} onsuccess={handleSuccess}>
                         <lightning-messages></lightning-messages>
                         <div class="slds-grid slds-grid_vertical">
                             <lightning-input-field field-name={typeField}></lightning-input-field>
                             <lightning-input-field field-name={startDateField}></lightning-input-field>
                             <lightning-input-field field-name={endDateField}></lightning-input-field>
                             <lightning-input-field field-name={workingDaysField}></lightning-input-field>
-                            <lightning-input-field field-name={managerField}></lightning-input-field>
+                            <lightning-input-field field-name={managerField} value={userManager}></lightning-input-field>
                         </div>
                         <lightning-button type="submit" variant="brand" label="Create"></lightning-button>
                     </lightning-record-edit-form>

@@ -173,6 +173,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Owner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Owner</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Vacation_Requests_Owner</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>RequestType__c</fullName>
         <externalId>false</externalId>
         <label>RequestType</label>
@@ -213,16 +224,15 @@
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
-            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
                     <fullName>New</fullName>
-                    <default>false</default>
+                    <default>true</default>
                     <label>New</label>
                 </value>
                 <value>
@@ -243,7 +253,7 @@
         <externalId>false</externalId>
         <label>WorkingDays</label>
         <precision>18</precision>
-        <required>true</required>
+        <required>false</required>
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -258,5 +268,17 @@
     <pluralLabel>Vacation Requests</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>PastDate</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF(StartDate__c &lt; TODAY(), true, false)</errorConditionFormula>
+        <errorMessage>Start date cannot be earlier than today.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>StartEndDates</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF(StartDate__c &gt; EndDate__c, true, false)</errorConditionFormula>
+        <errorMessage>Start date cannot be past the end date.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

@@ -23,7 +23,7 @@
                 <field>EndDate__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>WorkingDays__c</field>
             </layoutItems>
             <layoutItems>
@@ -31,8 +31,12 @@
                 <field>Manager__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Owner__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
