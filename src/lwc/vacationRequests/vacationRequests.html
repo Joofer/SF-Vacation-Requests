@@ -5,7 +5,6 @@
                 <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
             </div>
             <template if:true={vacationRequests.data}>
-
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="Vacation Request">
                     <thead>
                     <tr class="slds-line-height_reset">
@@ -62,12 +61,13 @@
                                     </div>
                                 </div>
                             </td>
-
                         </tr>
                     </template>
                     </tbody>
                 </table>
-
+            </template>
+            <template if:true={vacationRequests.error}>
+                <c-error-panel errors={vacationRequests.error}></c-error-panel>
             </template>
         </div>
     </lightning-card>
