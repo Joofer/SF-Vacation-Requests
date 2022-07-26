@@ -98,55 +98,37 @@ export default class VacationRequests extends LightningElement {
 
     // Request actions
 
+    submitRequestId;
+    approveRequestId;
+    removeRequestId;
+
+    @wire(submitVacationRequest, { requestId: this.submitRequestId })
+    wiredSubmitRequest({error, data}) {
+        if (data) {
+            if (data[0] === true) {
+                this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
+                this.updateRequestRecords();
+            } else {
+                this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
+            }
+        } else if (error) {
+            this.error = error;
+        }
+    }
+
+    @wire(approveVacationRequest, { requestId: this.approveRequestId }) approveRequestResult;
+    @wire(removeVacationRequest, { requestId: this.removeRequestId }) removeRequestResult;
+
     submitRequest(event) {
-        let selectedRequestId = event.currentTarget.dataset.id;
-        submitVacationRequest({ requestId: selectedRequestId })
-            .then((result) => {
-                if (result === true) {
-                    this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
-                    this.updateRequestRecords();
-                } else {
-                    this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
-                }
-            })
-            .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + " (" + error.message + ").");
-                this.error = error;
-            });
+        this.submitRequestId = event.currentTarget.dataset.id;
     }
 
     approveRequest(event) {
-        let selectedRequestId = event.currentTarget.dataset.id;
-        approveVacationRequest({ requestId: selectedRequestId })
-            .then((result) => {
-                if (result === true) {
-                    this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was approved.");
-                    this.updateRequestRecords();
-                } else {
-                    this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
-                }
-            })
-            .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + " (" + error.message + ").");
-                this.error = error;
-            });
+        this.approveRequestId = event.currentTarget.dataset.id;
     }
 
     removeRequest(event) {
-        let selectedRequestId = event.currentTarget.dataset.id;
-        removeVacationRequest({ requestId: selectedRequestId })
-            .then((result) => {
-                if (result === true) {
-                    this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was removed.");
-                    this.updateRequestRecords();
-                } else {
-                    this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
-                }
-            })
-            .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + " (" + error.message + ").");
-                this.error = error;
-            });
+        this.removeRequestId = event.currentTarget.dataset.id;
     }
 
 }
