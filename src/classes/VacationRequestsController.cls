@@ -34,7 +34,7 @@ public class VacationRequestsController {
 					SELECT Name, OwnerId, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
 					FROM Vacation_Request__c
 					WITH SECURITY_ENFORCED
-					ORDER BY Name ASC
+					ORDER BY Name DESC
 			];
 		} else {
 			requests = [
@@ -42,7 +42,7 @@ public class VacationRequestsController {
 					FROM Vacation_Request__c
 					WHERE Manager__c = :currentId
 					WITH SECURITY_ENFORCED
-					ORDER BY Name ASC
+					ORDER BY Name DESC
 			];
 		}
 
@@ -50,7 +50,7 @@ public class VacationRequestsController {
 		for (Vacation_Request__c request : requests) {
 			Boolean isSubmitVisible, isApproveVisible, isRemoveVisible;
 
-			if (request.Status__c == 'Submitted' || request.OwnerId != currentId) {
+			if (request.Status__c == 'Submitted' || request.Status__c == 'Approved' || request.OwnerId != currentId) {
 				isSubmitVisible = false;
 			} else {
 				isSubmitVisible = true;
