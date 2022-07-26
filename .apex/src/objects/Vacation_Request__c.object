@@ -173,10 +173,10 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Owner__c</fullName>
+        <fullName>RecordOwner__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Owner</label>
+        <label>RecordOwner</label>
         <referenceTo>User</referenceTo>
         <relationshipName>Vacation_Requests_Owner</relationshipName>
         <required>false</required>

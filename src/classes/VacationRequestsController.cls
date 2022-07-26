@@ -43,14 +43,14 @@ public class VacationRequestsController {
 		// Get filtered requests
 		if (!isOnlyMy) {
 			requests = [
-					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__r.Name, Status__c
+					SELECT Name, RecordOwner__r.Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__r.Name, Status__c
 					FROM Vacation_Request__c
 					WITH SECURITY_ENFORCED
 					ORDER BY Name DESC
 			];
 		} else {
 			requests = [
-					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__r.Name, Status__c
+					SELECT Name, RecordOwner__r.Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__r.Name, Status__c
 					FROM Vacation_Request__c
 					WHERE Manager__c = :currentId
 					WITH SECURITY_ENFORCED
