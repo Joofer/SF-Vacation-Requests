@@ -42,10 +42,6 @@ export default class VacationRequests extends LightningElement {
         this.updateRequestRecords();
     }
 
-    handleError(event) {
-        this.showErrorMessage("Error", "Manager is not specified for current user.");
-    }
-
     updateRequestRecords(object) {
         refreshApex(this.vacationRequests);
     }
@@ -155,6 +151,7 @@ export default class VacationRequests extends LightningElement {
     wireUser({error,data}) {
         if (error) {
             this.error = error;
+            this.showErrorMessage("Error", "Manager is not specified for current user.");
         } else if (data) {
             if (data.fields.ManagerId.value != null) {
                 this.managerId = data.fields.ManagerId.value;
