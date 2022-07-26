@@ -50,13 +50,10 @@ export default class VacationRequests extends LightningElement {
     @wire(getVacationRequestList)
     vacationRequests;
 
-    handleLoad() {
-
-    }
-
     handleSuccess(event) {
         this.showSuccessMessage("Success", "Vacation request was successfully created!");
         this.isSucceed = true;
+        this.updateRequestRecords();
     }
 
     handleError(event) {
