@@ -9,12 +9,12 @@ public class VacationRequestsController {
 
 	// Class for returning requests as a single object containing requests and actions visibility settings
 	private class RequestPair {
-		public ActionsVisibility visibility;
 		public Vacation_Request__c request;
+		public ActionsVisibility visibility;
 
-		public RequestPair(Vacation_Request__c _request, ActionsVisibility _visibility) {
-			visibility = _visibility;
-			request = _request;
+		public RequestPair(Vacation_Request__c request, ActionsVisibility visibility) {
+			this.request = request;
+			this.visibility = visibility;
 		}
 	}
 
