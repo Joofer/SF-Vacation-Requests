@@ -98,9 +98,9 @@ export default class VacationRequests extends LightningElement {
 
     // Request actions
 
-    submitRequestId;
-    approveRequestId;
-    removeRequestId;
+    submitRequestId = null;
+    approveRequestId = null;
+    removeRequestId = null;
 
     @wire(submitVacationRequest, { requestId: this.submitRequestId })
     wiredSubmitRequest({error, data}) {
