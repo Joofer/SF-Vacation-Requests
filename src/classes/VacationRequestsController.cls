@@ -19,6 +19,18 @@ public class VacationRequestsController {
 		}
 	}
 
+	// Get user's manager
+	@AuraEnabled(cacheable=true)
+	public static User getUserManager(String userId) {
+		return [
+				SELECT ManagerId
+				FROM User
+				WHERE Id = :userId
+				WITH SECURITY_ENFORCED
+				LIMIT 1
+		];
+	}
+
 	// Get all vacation requests in an ascending order
 	@AuraEnabled(cacheable=true)
 	public static List<Request> getVacationRequestList(Boolean isOnlyMy) {

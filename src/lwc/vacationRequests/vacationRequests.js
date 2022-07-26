@@ -1,13 +1,12 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
 // User info
 import Id from '@salesforce/user/Id';
-import ManagerId from '@salesforce/schema/User.Manager.Id';
 
 // VacationRequestsController imports
+import getUserManager from '@salesforce/apex/VacationRequestsController.getUserManager';
 import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
 import submitVacationRequest from '@salesforce/apex/VacationRequestsController.submitVacationRequest';
 import approveVacationRequest from '@salesforce/apex/VacationRequestsController.approveVacationRequest';
@@ -150,16 +149,16 @@ export default class VacationRequests extends LightningElement {
     @track userManager;
 
     getManager() {
-        getRecord({ recordId: Id, fields: [ManagerId] })
+        getUserManager({ userId: Id })
             .then((result) => {
-                if (result.fields.Manager.value != null) {
-                    this.userManager = data.fields.Manager.value;
+                if (result != null) {
+                    this.userManager = result;
                 } else {
                     this.showErrorMessage("Error", "Manager is not specified for current user.");
                 }
             })
             .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when getting user's manager ID.");
+                this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + " (" + error.message + ").");
                 this.error = error;
             });
     }
