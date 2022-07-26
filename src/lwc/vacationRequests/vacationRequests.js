@@ -14,6 +14,7 @@ import removeVacationRequest from '@salesforce/apex/VacationRequestsController.r
 
 // Schema imports
 import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
+import REQUEST_OWNER_FIELD from '@salesforce/schema/Vacation_Request__c.Owner__c';
 import REQUEST_REQUESTTYPE_FIELD from '@salesforce/schema/Vacation_Request__c.RequestType__c';
 import REQUEST_STARTDATE_FIELD from '@salesforce/schema/Vacation_Request__c.StartDate__c';
 import REQUEST_ENDDATE_FIELD from '@salesforce/schema/Vacation_Request__c.EndDate__c';
@@ -27,6 +28,7 @@ export default class VacationRequests extends LightningElement {
     @track isModalAddRequestShown = false;
 
     objectApiName = REQUEST_OBJECT;
+    ownerField = REQUEST_OWNER_FIELD;
     typeField = REQUEST_REQUESTTYPE_FIELD;
     startDateField = REQUEST_STARTDATE_FIELD;
     endDateField = REQUEST_ENDDATE_FIELD;
