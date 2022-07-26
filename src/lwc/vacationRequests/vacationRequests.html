@@ -3,7 +3,11 @@
         <div class="slds-m-around_medium">
             <div class="slds-button-group-row" role="group">
                 <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
-                <lightning-input type="checkbox" label="Only my" onchange={getOnlyMyRequests}></lightning-input>
+                <input type="checkbox" name="options" id="checkbox-only-my" value="checkbox-only-my" onchange={getOnlyMyRequests} />
+                <label class="slds-checkbox__label" for="checkbox-only-my">
+                    <span class="slds-checkbox_faux"></span>
+                    <span class="slds-form-element__label">Only my</span>
+                </label>
             </div>
             <template if:true={vacationRequests.data}>
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="Vacation Request">
