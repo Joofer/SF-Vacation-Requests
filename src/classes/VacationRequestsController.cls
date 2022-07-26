@@ -18,6 +18,7 @@ public class VacationRequestsController {
 	}
 
 	// Submit vacation request with id requestId
+	@AuraEnabled
 	public static Boolean submitVacationRequest(String requestId) {
 		List<Vacation_Request__c> vacationRequestList = [
 				SELECT Name, Status__c
@@ -40,6 +41,7 @@ public class VacationRequestsController {
 	}
 
 	// Approve vacation request with id requestId
+	@AuraEnabled
 	public static Boolean approveVacationRequest(String requestId) {
 		List<Vacation_Request__c> vacationRequestList = [
 				SELECT Name, Status__c
@@ -62,6 +64,7 @@ public class VacationRequestsController {
 	}
 
 	// Remove vacation request with id requestId
+	@AuraEnabled
 	public static Boolean removeVacationRequest(String requestId) {
 		List<Vacation_Request__c> vacationRequestList = [
 				SELECT Name, Status__c
