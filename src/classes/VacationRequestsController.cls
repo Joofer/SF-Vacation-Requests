@@ -56,10 +56,10 @@ public class VacationRequestsController {
 				actionsVisibility.isSubmitVisible = true;
 			}
 
-			if (request.Manager__c != currentId) {
+			if (request.Status__c == 'Approved' || request.Manager__c != currentId) {
 				actionsVisibility.isApproveVisible = false;
 			} else {
-				actionsVisibility.isSubmitVisible = true;
+				actionsVisibility.isApproveVisible = true;
 			}
 
 			if (request.CreatedById != currentId || request.Status__c != 'New') {
