@@ -142,6 +142,7 @@ export default class VacationRequests extends LightningElement {
 
     // Request processing
 
+    @track userId = Id;
     @track userManager;
 
     getManager() {
