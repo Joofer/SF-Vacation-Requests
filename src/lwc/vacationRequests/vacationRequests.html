@@ -52,7 +52,7 @@
                                 <div class="slds-truncate" title="Dates">{requestItem.request.StartDate__c} - {requestItem.request.EndDate__c} ({requestItem.request.WorkingDays__c})</div>
                             </td>
                             <td data-label="Manager">
-                                <div class="slds-truncate" title="Manager">{requestItem.request.Manager__c}</div>
+                                <div class="slds-truncate" title="Manager">{requestItem.request.Manager__r.Name}</div>
                             </td>
                             <td data-label="Status">
                                 <div class="slds-truncate" title="Status">{requestItem.request.Status__c}</div>
