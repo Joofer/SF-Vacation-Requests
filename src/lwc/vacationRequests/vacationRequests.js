@@ -1,8 +1,9 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
 import UsrId from '@salesforce/user/Id';
 import UsrManagerId from '@salesforce/schema/User.ManagerId';
-import { getRecord, getFieldValue, updateRecord } from 'lightning/uiRecordApi';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
 // VacationRequestsController imports
 import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
@@ -62,8 +63,8 @@ export default class VacationRequests extends LightningElement {
         this.showErrorMessage("Error", "Manager is not specified for current user.");
     }
 
-    updateRequestRecord(requestId) {
-        updateRecord({fields: { Id: requestId }});
+    updateRequestRecords(object) {
+        refreshApex(this.vacationRequests);
     }
 
     showSuccessMessage(title, message) {
@@ -103,7 +104,7 @@ export default class VacationRequests extends LightningElement {
             .then((result) => {
                 if (result == true) {
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
-                    this.updateRequestRecord(selectedRequestId);
+                    this.updateRequestRecords();
                 } else {
                     this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
                 }
@@ -120,7 +121,7 @@ export default class VacationRequests extends LightningElement {
             .then((result) => {
                 if (result == true) {
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was approved.");
-                    this.updateRequestRecord(selectedRequestId);
+                    this.updateRequestRecords();
                 } else {
                     this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
                 }
@@ -137,7 +138,7 @@ export default class VacationRequests extends LightningElement {
             .then((result) => {
                 if (result == true) {
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was removed.");
-                    this.updateRequestRecord(selectedRequestId);
+                    this.updateRequestRecords();
                 }
                 else {
                     this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
