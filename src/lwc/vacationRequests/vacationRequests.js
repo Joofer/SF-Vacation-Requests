@@ -138,14 +138,16 @@ export default class VacationRequests extends LightningElement {
 
     // Request processing
 
+    @track userName;
+
     getNameById(event) {
         let userId = event.currentTarget.dataset.id;
         getUserName({ requestId: userId })
             .then((result) => {
                 if (result.length > 0) {
-                    this.template.querySelector('[data-id=' + event.currentTarget.dataset.id + ']').value = "result[0].Name";
+                    this.userName = result[0].Name;
                 } else {
-                    this.template.querySelector('[data-id=' + event.currentTarget.dataset.id + ']').value = "userId";
+                    this.userName = userId;
                 }
             })
             .catch((error) => {
