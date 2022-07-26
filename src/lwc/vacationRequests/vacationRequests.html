@@ -4,7 +4,7 @@
             <div class="slds-button-group-row" role="group">
                 <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
             </div>
-            <template if:true={vacationRequests}>
+            <template if:true={vacationRequests.data}>
 
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="Vacation Request">
                     <thead>
@@ -33,7 +33,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <template for:each={vacationRequests} for:item="request">
+                    <template for:each={vacationRequests.data} for:item="request">
                         <tr key={request.Name} class="slds-hint-parent">
                             <td data-label="Number">
                                 <div class="slds-truncate" title="Number">{request.Name}</div>
