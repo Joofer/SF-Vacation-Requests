@@ -147,19 +147,21 @@ export default class VacationRequests extends LightningElement {
     isApproveButtonVisible = true;
     isRemoveButtonVisible = true;
 
-    @track managerId;
+    @track userManager;
 
-    @wire(getRecord, { recordId: Id, fields: [ManagerId] })
-    userDetails({ error, data }) {
-        if (error) {
-            this.error = error;
-        } else if (data) {
-            if (data.fields.Manager.value != null) {
-                this.managerId = data.fields.Manager.value.fields.Id.value;
-            } else {
-                this.showErrorMessage("Error", "Manager is not specified for current user.");
-            }
-        }
+    getManager() {
+        getRecord({ recordId: Id, fields: [ManagerId] })
+            .then((result) => {
+                if (result.fields.Manager.value != null) {
+                    this.userManager = data.fields.Manager.value;
+                } else {
+                    this.showErrorMessage("Error", "Manager is not specified for current user.");
+                }
+            })
+            .catch((error) => {
+                this.showErrorMessage("Error", "Something went wrong when getting user's manager ID.");
+                this.error = error;
+            });
     }
 
 }
