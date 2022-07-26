@@ -75,7 +75,7 @@
                         </tr>
                     </template>
                     <template if:true={vacationRequests.error}>
-                        <template for:each={vacationRequests.body} for:item="error">
+                        <template for:each={vacationRequests.error} for:item="error">
                             statusText: {error.message}
                         </template>
                     </template>
