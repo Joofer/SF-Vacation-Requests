@@ -107,7 +107,7 @@ export default class VacationRequests extends LightningElement {
                 if (result == true)
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
                 else
-                    this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
+                    this.showErrorMessage("Error", "Unable to find request #" + selectedRequestId + ".");
             })
             .catch((error) => {
                 this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
@@ -122,7 +122,7 @@ export default class VacationRequests extends LightningElement {
                 if (result == true)
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was approved.");
                 else
-                    this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
+                    this.showErrorMessage("Error", "Unable to find request #" + selectedRequestId + ".");
             })
             .catch((error) => {
                 this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
@@ -137,7 +137,7 @@ export default class VacationRequests extends LightningElement {
                 if (result == true)
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was removed.");
                 else
-                    this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
+                    this.showErrorMessage("Error", "Unable to find request #" + selectedRequestId + ".");
             })
             .catch((error) => {
                 this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
