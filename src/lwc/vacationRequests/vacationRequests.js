@@ -107,7 +107,7 @@ export default class VacationRequests extends LightningElement {
             .then((result) => {
                 if (result == true) {
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
-                    updateRecord(selectedRequestId);
+                    this.updateRequestRecord(selectedRequestId);
                 } else {
                     this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
                 }
@@ -124,7 +124,7 @@ export default class VacationRequests extends LightningElement {
             .then((result) => {
                 if (result == true) {
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was approved.");
-                    updateRecord(selectedRequestId);
+                    this.updateRequestRecord(selectedRequestId);
                 } else {
                     this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
                 }
@@ -141,7 +141,7 @@ export default class VacationRequests extends LightningElement {
             .then((result) => {
                 if (result == true) {
                     this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was removed.");
-                    updateRecord(selectedRequestId);
+                    this.updateRequestRecord(selectedRequestId);
                 }
                 else {
                     this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
