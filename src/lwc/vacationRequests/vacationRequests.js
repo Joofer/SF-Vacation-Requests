@@ -29,7 +29,7 @@ export default class VacationRequests extends LightningElement {
     @track managerId;
 
     @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})
-    wireuser({error,data}) {
+    wireUser({error,data}) {
         if (error) {
             this.error = error;
         } else if (data) {
@@ -87,6 +87,8 @@ export default class VacationRequests extends LightningElement {
         this.handleLoad();
     }
 
+    // Request creation modal
+
     openModalAddRequest() {
         this.isSucceed = false;
         this.isModalAddRequestShown = true;
@@ -96,11 +98,16 @@ export default class VacationRequests extends LightningElement {
         this.isModalAddRequestShown = false;
     }
 
+    // Request actions
+
     submitRequest(event) {
         let selectedRequestId = event.currentTarget.dataset.id.substring(2);
         submitVacationRequest({ requestId: selectedRequestId })
             .then((result) => {
-                this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
+                if (result == true)
+                    this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
+                else
+                    this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
             })
             .catch((error) => {
                 this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
@@ -112,7 +119,10 @@ export default class VacationRequests extends LightningElement {
         let selectedRequestId = event.currentTarget.dataset.id.substring(2);
         approveVacationRequest({ requestId: selectedRequestId })
             .then((result) => {
-                this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was approved.");
+                if (result == true)
+                    this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was approved.");
+                else
+                    this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
             })
             .catch((error) => {
                 this.showErrorMessage("Error", "Something went wrong when approving request #" + selectedRequestId + ".");
@@ -124,7 +134,10 @@ export default class VacationRequests extends LightningElement {
         let selectedRequestId = event.currentTarget.dataset.id.substring(2);
         removeVacationRequest({ requestId: selectedRequestId })
             .then((result) => {
-                this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was removed.");
+                if (result == true)
+                    this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was removed.");
+                else
+                    this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
             })
             .catch((error) => {
                 this.showErrorMessage("Error", "Something went wrong when removing request #" + selectedRequestId + ".");
