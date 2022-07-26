@@ -43,7 +43,7 @@ public class VacationRequestsController {
 		// Get filtered requests
 		if (!isOnlyMy) {
 			requests = [
-					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, OwnerId, Manager__c, Manager__r.Name, Status__c
+					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, RecordOwner__c, OwnerId, Manager__c, Manager__r.Name, Status__c
 					FROM Vacation_Request__c
 					WITH SECURITY_ENFORCED
 					ORDER BY Name DESC
