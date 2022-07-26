@@ -142,23 +142,19 @@ export default class VacationRequests extends LightningElement {
 
     // Request processing
 
-    isSubmitButtonVisible = true;
-    isApproveButtonVisible = true;
-    isRemoveButtonVisible = true;
-
     @track userManager;
 
     getManager() {
         getUserManager({ userId: Id })
             .then((result) => {
-                if (result != null) {
-                    this.userManager = result;
+                if (result.value != null) {
+                    this.userManager = result.value;
                 } else {
                     this.showErrorMessage("Error", "Manager is not specified for current user.");
                 }
             })
             .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + " (" + error.message + ").");
+                this.showErrorMessage("Error", "Something went wrong when getting user's manager.");
                 this.error = error;
             });
     }
