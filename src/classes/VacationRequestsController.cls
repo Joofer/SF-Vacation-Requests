@@ -17,6 +17,17 @@ public class VacationRequestsController {
 		return new List<Vacation_Request__c>();
 	}
 
+	// Get user name by Id
+	@AuraEnabled(cacheable=true)
+	public static List<User> getUserName(String userId) {
+		return [
+				SELECT Name
+				FROM User
+				WHERE Id = :userId
+				WITH SECURITY_ENFORCED
+		];
+	}
+
 	// Submit vacation request with id requestId
 	@AuraEnabled
 	public static Boolean submitVacationRequest(String requestId) {
