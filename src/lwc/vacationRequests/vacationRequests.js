@@ -106,10 +106,10 @@ export default class VacationRequests extends LightningElement {
     wiredSubmitRequest({error, data}) {
         if (data) {
             if (data[0] === true) {
-                this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
+                this.showSuccessMessage("Success", "Vacation request #" + this.submitRequestId + " was submitted.");
                 this.updateRequestRecords();
             } else {
-                this.showErrorMessage("Error", "Something went wrong when submitting request #" + selectedRequestId + ".");
+                this.showErrorMessage("Error", "Something went wrong when submitting request #" + this.submitRequestId + ".");
             }
         } else if (error) {
             this.error = error;
