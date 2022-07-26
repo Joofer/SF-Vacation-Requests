@@ -38,36 +38,36 @@
                     </thead>
                     <tbody>
                     <template for:each={vacationRequests.data} for:item="request">
-                        <tr key={request.Name} class="slds-hint-parent">
+                        <tr key={request.request.Name} class="slds-hint-parent">
                             <td data-label="Number">
-                                <div class="slds-truncate" title="Number">{request.Name}</div>
+                                <div class="slds-truncate" title="Number">{request.request.Name}</div>
                             </td>
                             <td data-label="Owner">
-                                <div class="slds-truncate" title="Owner">{request.OwnerId}</div>
+                                <div class="slds-truncate" title="Owner">{request.request.OwnerId}</div>
                             </td>
                             <td data-label="Type">
-                                <div class="slds-truncate" title="Type">{request.RequestType__c}</div>
+                                <div class="slds-truncate" title="Type">{request.request.RequestType__c}</div>
                             </td>
                             <td data-label="Dates">
-                                <div class="slds-truncate" title="Dates">{request.StartDate__c} - {request.EndDate__c} ({request.WorkingDays__c})</div>
+                                <div class="slds-truncate" title="Dates">{request.request.StartDate__c} - {request.request.EndDate__c} ({request.request.WorkingDays__c})</div>
                             </td>
                             <td data-label="Manager">
-                                <div class="slds-truncate" title="Manager">{request.Manager__c}</div>
+                                <div class="slds-truncate" title="Manager">{request.request.Manager__c}</div>
                             </td>
                             <td data-label="Status">
-                                <div class="slds-truncate" title="Status">{request.Status__c}</div>
+                                <div class="slds-truncate" title="Status">{request.request.Status__c}</div>
                             </td>
                             <td data-label="Actions">
                                 <div class="slds-truncate" title="Actions">
                                     <div class="slds-button-group-row" role="group">
-                                        <template if:true={isSubmitButtonVisible}>
-                                            <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={submitRequest}>Submit</button>
+                                        <template if:true={request.actionsVisibility.isSubmitVisible}>
+                                            <button class="slds-button slds-button_neutral" data-id={request.request.Name} onclick={submitRequest}>Submit</button>
                                         </template>
-                                        <template if:true={isApproveButtonVisible}>
-                                            <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={approveRequest}>Approve</button>
+                                        <template if:true={request.actionsVisibility.isApproveVisible}>
+                                            <button class="slds-button slds-button_neutral" data-id={request.request.Name} onclick={approveRequest}>Approve</button>
                                         </template>
-                                        <template if:true={isRemoveButtonVisible}>
-                                            <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={removeRequest}>Remove</button>
+                                        <template if:true={request.actionsVisibility.isRemoveVisible}>
+                                            <button class="slds-button slds-button_neutral" data-id={request.request.Name} onclick={removeRequest}>Remove</button>
                                         </template>
                                     </div>
                                 </div>

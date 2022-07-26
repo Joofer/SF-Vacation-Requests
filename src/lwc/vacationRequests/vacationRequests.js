@@ -145,6 +145,10 @@ export default class VacationRequests extends LightningElement {
 
     // Request processing
 
+    isSubmitButtonVisible = true;
+    isApproveButtonVisible = true;
+    isRemoveButtonVisible = true;
+
     @track managerId;
 
     @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})

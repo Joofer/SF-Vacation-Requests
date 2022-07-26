@@ -1,19 +1,43 @@
 public class VacationRequestsController {
 
+	// Class for storing visibility settings for all requests
+	private class ActionsVisibility {
+		public Boolean isSubmitVisible;
+		public Boolean isApproveVisible;
+		public Boolean isRemoveVisible;
+	}
+
+	// Class for returning requests as a single object containing requests and actions visibility settings
+	private class RequestPair {
+		public ActionsVisibility visibility;
+		public Vacation_Request__c request;
+
+		public RequestPair(Vacation_Request__c _request, ActionsVisibility _visibility) {
+			visibility = _visibility;
+			request = _request;
+		}
+	}
+
 	// Get all vacation requests in an ascending order
 	@AuraEnabled(cacheable=true)
-	public static List<Vacation_Request__c> getVacationRequestList(Boolean isOnlyMy) {
+	public static List<RequestPair> getVacationRequestList(Boolean isOnlyMy) {
+		List<RequestPair> vacationRequests = new List<RequestPair>();
+		List<Vacation_Request__c> result = new List<Vacation_Request__c>();
+		List<ActionsVisibility> visibilities = new List<ActionsVisibility>();
+
+		// Get current user id
+		String currentId = UserInfo.getUserId();
+
+		// Get filtered requests
 		if (!isOnlyMy) {
-			return [
+			result = [
 					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
 					FROM Vacation_Request__c
 					WITH SECURITY_ENFORCED
 					ORDER BY Name ASC
 			];
 		} else {
-			String currentId = UserInfo.getUserId();
-
-			return [
+			result = [
 					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
 					FROM Vacation_Request__c
 					WHERE Manager__c = :currentId
@@ -21,6 +45,38 @@ public class VacationRequestsController {
 					ORDER BY Name ASC
 			];
 		}
+
+		// Assign actions visibility settings for each request
+		for (Vacation_Request__c request : result) {
+			ActionsVisibility actionsVisibility = new ActionsVisibility();
+
+			if (request.Status__c == 'Submitted' || request.CreatedById != currentId) {
+				actionsVisibility.isSubmitVisible = false;
+			} else {
+				actionsVisibility.isSubmitVisible = true;
+			}
+
+			if (request.Manager__c != currentId) {
+				actionsVisibility.isApproveVisible = false;
+			} else {
+				actionsVisibility.isSubmitVisible = true;
+			}
+
+			if (request.CreatedById != currentId || request.Status__c != 'New') {
+				actionsVisibility.isRemoveVisible = false;
+			} else {
+				actionsVisibility.isRemoveVisible = true;
+			}
+
+			visibilities.add(actionsVisibility);
+		}
+
+		// Create list of request and visibility settings pairs
+		for (Integer i = 0; i < result.size(); i++) {
+			vacationRequests.add(new RequestPair(result[i], visibilities[i]));
+		}
+
+		return vacationRequests;
 	}
 
 	// Get user name by Id
