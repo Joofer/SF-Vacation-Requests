@@ -8,6 +8,7 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 // VacationRequestsController imports
 import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
 import getFilteredVacationRequestList from '@salesforce/apex/VacationRequestsController.getFilteredVacationRequestList';
+import getUserName from '@salesforce/apex/VacationRequestsController.getUserName';
 import submitVacationRequest from '@salesforce/apex/VacationRequestsController.submitVacationRequest';
 import approveVacationRequest from '@salesforce/apex/VacationRequestsController.approveVacationRequest';
 import removeVacationRequest from '@salesforce/apex/VacationRequestsController.removeVacationRequest';
@@ -26,19 +27,6 @@ export default class VacationRequests extends LightningElement {
     @track error;
     @track isModalAddRequestShown = false;
     @track isSucceed = false;
-
-    @track managerId;
-
-    @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})
-    wireUser({error,data}) {
-        if (error) {
-            this.error = error;
-        } else if (data) {
-            if (data.fields.ManagerId.value != null) {
-                this.managerId = data.fields.ManagerId.value;
-            }
-        }
-    }
 
     objectApiName = REQUEST_OBJECT;
     typeField = REQUEST_REQUESTTYPE_FIELD;
@@ -148,5 +136,35 @@ export default class VacationRequests extends LightningElement {
             });
     }
 
+    // Request processing
+
+    getNameById(event) {
+        let userId = event.currentTarget.dataset.id;
+        getUserName({ requestId: userId })
+            .then((result) => {
+                if (result.length > 0) {
+                    return result[0].Name;
+                } else {
+                    return userId;
+                }
+            })
+            .catch((error) => {
+                this.showErrorMessage("Error", "Something went wrong when getting user name #" + userId + " (" + error.message + ").");
+                this.error = error;
+            });
+    }
+
+    @track managerId;
+
+    @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})
+    wireUser({error,data}) {
+        if (error) {
+            this.error = error;
+        } else if (data) {
+            if (data.fields.ManagerId.value != null) {
+                this.managerId = data.fields.ManagerId.value;
+            }
+        }
+    }
 
 }
