@@ -97,7 +97,7 @@ export default class VacationRequests extends LightningElement {
     }
 
     submitRequest(event) {
-        let selectedRequestId = event.currentTarget.dataset.id;
+        let selectedRequestId = event.currentTarget.dataset.id.substring(2);
         submitVacationRequest({ requestId: selectedRequestId })
             .then((result) => {
                 this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was submitted.");
@@ -109,7 +109,7 @@ export default class VacationRequests extends LightningElement {
     }
 
     approveRequest(event) {
-        let selectedRequestId = event.currentTarget.dataset.id;
+        let selectedRequestId = event.currentTarget.dataset.id.substring(2);
         approveVacationRequest({ requestId: selectedRequestId })
             .then((result) => {
                 this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was approved.");
@@ -121,7 +121,7 @@ export default class VacationRequests extends LightningElement {
     }
 
     removeRequest(event) {
-        let selectedRequestId = event.currentTarget.dataset.id;
+        let selectedRequestId = event.currentTarget.dataset.id.substring(2);
         removeVacationRequest({ requestId: selectedRequestId })
             .then((result) => {
                 this.showSuccessMessage("Success", "Vacation request #" + selectedRequestId + " was removed.");
