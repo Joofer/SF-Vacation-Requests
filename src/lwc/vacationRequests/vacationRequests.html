@@ -3,6 +3,7 @@
         <div class="slds-m-around_medium">
             <div class="slds-button-group-row" role="group">
                 <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
+                <lightning-input type="checkbox" label="Only my" onchange={getOnlyMyRequests}></lightning-input>
             </div>
             <template if:true={vacationRequests.data}>
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="Vacation Request">
@@ -47,7 +48,7 @@
                                 <div class="slds-truncate" title="Dates">{request.StartDate__c} - {request.EndDate__c} ({request.WorkingDays__c})</div>
                             </td>
                             <td data-label="Manager">
-                                <div class="slds-truncate" title="Manager" data-id={request.Manager__c}>{userName}</div>
+                                <div class="slds-truncate" title="Manager">{request.Manager__c}</div>
                             </td>
                             <td data-label="Status">
                                 <div class="slds-truncate" title="Status">{request.Status__c}</div>
@@ -55,9 +56,15 @@
                             <td data-label="Actions">
                                 <div class="slds-truncate" title="Actions">
                                     <div class="slds-button-group-row" role="group">
-                                        <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={submitRequest}>Submit</button>
-                                        <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={approveRequest}>Approve</button>
-                                        <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={removeRequest}>Remove</button>
+                                        <template if:true={isSubmitButtonVisible}>
+                                            <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={submitRequest}>Submit</button>
+                                        </template>
+                                        <template if:true={isApproveButtonVisible}>
+                                            <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={approveRequest}>Approve</button>
+                                        </template>
+                                        <template if:true={isRemoveButtonVisible}>
+                                            <button class="slds-button slds-button_neutral" data-id={request.Name} onclick={removeRequest}>Remove</button>
+                                        </template>
                                     </div>
                                 </div>
                             </td>

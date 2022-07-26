@@ -7,8 +7,6 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
 // VacationRequestsController imports
 import getVacationRequestList from '@salesforce/apex/VacationRequestsController.getVacationRequestList';
-import getFilteredVacationRequestList from '@salesforce/apex/VacationRequestsController.getFilteredVacationRequestList';
-import getUserName from '@salesforce/apex/VacationRequestsController.getUserName';
 import submitVacationRequest from '@salesforce/apex/VacationRequestsController.submitVacationRequest';
 import approveVacationRequest from '@salesforce/apex/VacationRequestsController.approveVacationRequest';
 import removeVacationRequest from '@salesforce/apex/VacationRequestsController.removeVacationRequest';
@@ -35,7 +33,7 @@ export default class VacationRequests extends LightningElement {
     workingDaysField = REQUEST_WORKINGDAYS_FIELD;
     managerField = REQUEST_MANAGER_FIELD;
 
-    @wire(getVacationRequestList)
+    @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
     vacationRequests;
 
     handleSuccess(event) {
@@ -50,6 +48,15 @@ export default class VacationRequests extends LightningElement {
 
     updateRequestRecords(object) {
         refreshApex(this.vacationRequests);
+    }
+
+    // Requests filter
+
+    isOnlyMyRequests = false;
+
+    getOnlyMyRequests(event) {
+        this.isOnlyMyRequests = event.target.checked;
+        this.updateRequestRecords();
     }
 
     // Toast messages
@@ -137,24 +144,6 @@ export default class VacationRequests extends LightningElement {
     }
 
     // Request processing
-
-    @track userName;
-
-    getNameById(event) {
-        let userId = event.currentTarget.dataset.id;
-        getUserName({ requestId: userId })
-            .then((result) => {
-                if (result.length > 0) {
-                    this.userName = 'result[0]';
-                } else {
-                    this.userName = 'userId';
-                }
-            })
-            .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when getting user name #" + userId + " (" + error.message + ").");
-                this.error = error;
-            });
-    }
 
     @track managerId;
 

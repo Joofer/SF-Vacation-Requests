@@ -2,19 +2,25 @@ public class VacationRequestsController {
 
 	// Get all vacation requests in an ascending order
 	@AuraEnabled(cacheable=true)
-	public static List<Vacation_Request__c> getVacationRequestList() {
-		return [
-				SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
-				FROM Vacation_Request__c
-				WITH SECURITY_ENFORCED
-				ORDER BY Name ASC
-		];
-	}
+	public static List<Vacation_Request__c> getVacationRequestList(Boolean isOnlyMy) {
+		if (!isOnlyMy) {
+			return [
+					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
+					FROM Vacation_Request__c
+					WITH SECURITY_ENFORCED
+					ORDER BY Name ASC
+			];
+		} else {
+			String currentId = UserInfo.getUserId();
 
-	// Get assigned vacation requests in an ascending order
-	@AuraEnabled(cacheable=true)
-	public static List<Vacation_Request__c> getFilteredVacationRequestList() {
-		return new List<Vacation_Request__c>();
+			return [
+					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, Manager__c, Status__c
+					FROM Vacation_Request__c
+					WHERE Manager__c = :currentId
+					WITH SECURITY_ENFORCED
+					ORDER BY Name ASC
+			];
+		}
 	}
 
 	// Get user name by Id
