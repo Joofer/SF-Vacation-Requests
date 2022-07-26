@@ -28,8 +28,6 @@ export default class VacationRequests extends LightningElement {
 
     @track managerId;
 
-    @track selectedRequestId;
-
     @wire(getRecord, {recordId: UsrId, fields: [UsrManagerId]})
     wireuser({error,data}) {
         if (error) {
@@ -101,10 +99,10 @@ export default class VacationRequests extends LightningElement {
     submitRequest(event) {
         submitVacationRequest({ requestId: this.selectedRequestId })
             .then((result) => {
-                this.showSuccessMessage("Success", "Vacation request #" + this.selectedRequestId + " was submitted.");
+                this.showSuccessMessage("Success", "Vacation request #" + event.currentTarget.dataset.id + " was submitted.");
             })
             .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when submitting request #" + this.selectedRequestId + ".");
+                this.showErrorMessage("Error", "Something went wrong when submitting request #" + event.currentTarget.dataset.id + ".");
                 this.error = error;
             });
     }
@@ -112,10 +110,10 @@ export default class VacationRequests extends LightningElement {
     approveRequest(event) {
         approveVacationRequest({ requestId: this.selectedRequestId })
             .then((result) => {
-                this.showSuccessMessage("Success", "Vacation request #" + this.selectedRequestId + " was approved.");
+                this.showSuccessMessage("Success", "Vacation request #" + event.currentTarget.dataset.id + " was approved.");
             })
             .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when approving request #" + this.selectedRequestId + ".");
+                this.showErrorMessage("Error", "Something went wrong when approving request #" + event.currentTarget.dataset.id + ".");
                 this.error = error;
             });
     }
@@ -123,10 +121,10 @@ export default class VacationRequests extends LightningElement {
     removeRequest(event) {
         removeVacationRequest({ requestId: this.selectedRequestId })
             .then((result) => {
-                this.showSuccessMessage("Success", "Vacation request #" + this.selectedRequestId + " was removed.");
+                this.showSuccessMessage("Success", "Vacation request #" + event.currentTarget.dataset.id + " was removed.");
             })
             .catch((error) => {
-                this.showErrorMessage("Error", "Something went wrong when removing request #" + this.selectedRequestId + ".");
+                this.showErrorMessage("Error", "Something went wrong when removing request #" + event.currentTarget.dataset.id + ".");
                 this.error = error;
             });
     }
