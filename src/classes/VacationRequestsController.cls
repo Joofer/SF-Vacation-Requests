@@ -45,7 +45,6 @@ public class VacationRequestsController {
 			requests = [
 					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, RecordOwner__c, RecordOwner__r.Name, Manager__c, Manager__r.Name, Status__c
 					FROM Vacation_Request__c
-					WITH SECURITY_ENFORCED
 					ORDER BY Name DESC
 			];
 		} else {
@@ -53,7 +52,6 @@ public class VacationRequestsController {
 					SELECT Name, RequestType__c, StartDate__c, EndDate__c, WorkingDays__c, RecordOwner__c, RecordOwner__r.Name, Manager__c, Manager__r.Name, Status__c
 					FROM Vacation_Request__c
 					WHERE Manager__c = :currentId
-					WITH SECURITY_ENFORCED
 					ORDER BY Name DESC
 			];
 		}
