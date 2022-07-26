@@ -50,7 +50,7 @@ public class VacationRequestsController {
 		for (Vacation_Request__c request : requests) {
 			Boolean isSubmitVisible, isApproveVisible, isRemoveVisible;
 
-			if (request.Status__c == 'Submitted' || request.OwnerId != currentId) {
+			if (request.Status__c == 'Submitted' || request.Status__c == 'Approved' || request.OwnerId != currentId) {
 				isSubmitVisible = false;
 			} else {
 				isSubmitVisible = true;
