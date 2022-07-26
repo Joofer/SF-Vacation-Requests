@@ -68,7 +68,7 @@ public class VacationRequestsController {
 				isSubmitVisible = true;
 			}
 
-			if (request.Status__c == 'Approved' || request.Manager__c != currentId) {
+			if (request.Status__c != 'Submitted' || request.Status__c == 'Approved' || request.Manager__c != currentId) {
 				isApproveVisible = false;
 			} else {
 				isApproveVisible = true;
