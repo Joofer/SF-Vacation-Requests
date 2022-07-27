@@ -46,7 +46,7 @@ public class VacationRequestsControllerTests {
 		];
 		String id = request[0].Name;
 
-		System.assert(VacationRequestsController.submitVacationRequest(request.Name));
+		System.assert(VacationRequestsController.submitVacationRequest(request[0].Name));
 
 		String statusAfter = [
 				SELECT Status__c
