@@ -173,17 +173,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>RecordOwner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>RecordOwner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Vacation_Requests_Owner</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>RequestType__c</fullName>
         <externalId>false</externalId>
         <label>RequestType</label>

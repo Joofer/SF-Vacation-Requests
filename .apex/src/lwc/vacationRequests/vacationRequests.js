@@ -14,11 +14,9 @@ import removeVacationRequest from '@salesforce/apex/VacationRequestsController.r
 
 // Schema imports
 import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
-import REQUEST_OWNER_FIELD from '@salesforce/schema/Vacation_Request__c.RecordOwner__c';
 import REQUEST_REQUESTTYPE_FIELD from '@salesforce/schema/Vacation_Request__c.RequestType__c';
 import REQUEST_STARTDATE_FIELD from '@salesforce/schema/Vacation_Request__c.StartDate__c';
 import REQUEST_ENDDATE_FIELD from '@salesforce/schema/Vacation_Request__c.EndDate__c';
-import REQUEST_WORKINGDAYS_FIELD from '@salesforce/schema/Vacation_Request__c.WorkingDays__c';
 import REQUEST_MANAGER_FIELD from '@salesforce/schema/Vacation_Request__c.Manager__c';
 
 export default class VacationRequests extends LightningElement {
@@ -28,11 +26,9 @@ export default class VacationRequests extends LightningElement {
     @track isModalAddRequestShown = false;
 
     objectApiName = REQUEST_OBJECT;
-    ownerField = REQUEST_OWNER_FIELD;
     typeField = REQUEST_REQUESTTYPE_FIELD;
     startDateField = REQUEST_STARTDATE_FIELD;
     endDateField = REQUEST_ENDDATE_FIELD;
-    workingDaysField = REQUEST_WORKINGDAYS_FIELD;
     managerField = REQUEST_MANAGER_FIELD;
 
     @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
@@ -158,6 +154,18 @@ export default class VacationRequests extends LightningElement {
                 this.showErrorMessage("Error", "Something went wrong when getting user's manager.");
                 this.error = error;
             });
+    }
+
+    @wire(getVacationRequestList)
+    processUnits({data, error}){
+        if(data) {
+            this.vacationRequests = data.map(request => {
+                return {
+                    ...request,
+                    badgeStyle: (request.Status__c === 'New'? '.slds-badge': (request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
+                }
+            });
+        }
     }
 
 }
