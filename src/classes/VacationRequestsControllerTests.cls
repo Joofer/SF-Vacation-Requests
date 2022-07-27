@@ -59,15 +59,15 @@ public class VacationRequestsControllerTests {
 	}
 
 	@IsTest static void approveRequest() {
-		Vacation_Request__c request = [
+		List<Vacation_Request__c> request = [
 				SELECT Name, Status__c
 				FROM Vacation_Request__c
 				WHERE Status__c = 'Submitted'
 				LIMIT 1
 		];
-		String id = request.Name;
+		String id = request[0].Name;
 
-		System.assert(VacationRequestsController.approveVacationRequest(request.Name));
+		System.assert(VacationRequestsController.approveVacationRequest(request[0].Name));
 
 		String statusAfter = [
 				SELECT Status__c
@@ -80,14 +80,14 @@ public class VacationRequestsControllerTests {
 	}
 
 	@IsTest static void removeRequest() {
-		Vacation_Request__c requestId = [
+		List<Vacation_Request__c> request = [
 				SELECT Name
 				FROM Vacation_Request__c
 				LIMIT 1
 		];
 		Integer sizeBefore = [ SELECT Id FROM Vacation_Request__c ].size();
 
-		System.assert(VacationRequestsController.removeVacationRequest(requestId.Name));
+		System.assert(VacationRequestsController.removeVacationRequest(request[0].Name));
 
 		Integer sizeAfter = [ SELECT Id FROM Vacation_Request__c ].size();
 
