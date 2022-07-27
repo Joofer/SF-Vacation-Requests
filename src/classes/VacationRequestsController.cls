@@ -85,7 +85,7 @@ public class VacationRequestsController {
 			}
 
 			// Set badge style
-			badgeStyle = (request.Status__c == 'New'? '.slds-badge': (request.Status__c == 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'));
+			badgeStyle = (request.Status__c == 'New'? 'slds-badge': (request.Status__c == 'Submitted'? 'slds-badge slds-theme_warning': 'slds-badge slds-theme_success'));
 
 			// Create list of request and visibility settings pairs
 			vacationRequests.add(new Request(request, isSubmitVisible, isApproveVisible, isRemoveVisible, badgeStyle));
