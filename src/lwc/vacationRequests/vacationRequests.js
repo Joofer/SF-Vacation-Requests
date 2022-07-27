@@ -21,7 +21,7 @@ import REQUEST_MANAGER_FIELD from '@salesforce/schema/Vacation_Request__c.Manage
 
 export default class VacationRequests extends LightningElement {
 
-    @track vacationRequests;
+    @track vacationRequests = [];
     @track error;
     @track isModalAddRequestShown = false;
 
