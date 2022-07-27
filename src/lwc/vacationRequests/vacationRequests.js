@@ -31,8 +31,8 @@ export default class VacationRequests extends LightningElement {
     endDateField = REQUEST_ENDDATE_FIELD;
     managerField = REQUEST_MANAGER_FIELD;
 
-    // @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
-    // vacationRequests;
+    @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
+    vacationRequests;
 
     @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
     processUnits({data, error}){
