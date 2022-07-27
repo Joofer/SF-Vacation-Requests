@@ -1,14 +1,30 @@
 <template>
     <lightning-card title="Vacation Requests" icon-name="standard:survey">
         <div class="slds-m-around_medium">
-            <ul class="slds-button-group-row">
-                <li class="slds-button-group-item">
-                    <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
-                </li>
-                <li class="slds-button-group-item">
-                    <lightning-input type="checkbox" label="Only my" onchange={getOnlyMyRequests}></lightning-input>
-                </li>
-            </ul>
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <ul class="slds-button-group-row">
+                        <li class="slds-button-group-item">
+                            <button class="slds-button slds-button_brand" onclick={openModalAddRequest}>Add Request</button>
+                        </li>
+                        <li class="slds-button-group-item">
+                            <lightning-input type="checkbox" label="Only my" onchange={getOnlyMyRequests}></lightning-input>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slds-col">
+                    <ul class="slds-button-group-row">
+                        <li class="slds-button-group-item">
+                            <span class="slds-badge">New</span>
+                            <span class="slds-badge slds-theme_warning">Warning</span>
+                            <span class="slds-badge slds-theme_success">Success</span>
+                        </li>
+                        <li class="slds-button-group-item">
+                            <lightning-input type="checkbox" label="Only my" onchange={getOnlyMyRequests}></lightning-input>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <template if:true={vacationRequests.data}>
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="Vacation Request">
                     <thead>
