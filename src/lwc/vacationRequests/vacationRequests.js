@@ -40,7 +40,7 @@ export default class VacationRequests extends LightningElement {
             this.vacationRequests = data.map(request => {
                 return {
                     ...request,
-                    badgeStyle: (request.request.Status__c === 'New'? '.slds-badge': (request.request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
+                    badgeStyle: (request.Status__c === 'New'? '.slds-badge': (request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
                 }
             });
         } else if (error) {
