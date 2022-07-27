@@ -5,17 +5,14 @@ public class VacationRequestsController {
 		@AuraEnabled
 		public Vacation_Request__c request { get; set; }
 		@AuraEnabled
-		public String status { get; set; }
-		@AuraEnabled
 		public Boolean isSubmitVisible { get; set; }
 		@AuraEnabled
 		public Boolean isApproveVisible { get; set; }
 		@AuraEnabled
 		public Boolean isRemoveVisible { get; set; }
 
-		public Request(Vacation_Request__c request, String status, Boolean isSubmitVisible, Boolean isApproveVisible, Boolean isRemoveVisible) {
+		public Request(Vacation_Request__c request, Boolean isSubmitVisible, Boolean isApproveVisible, Boolean isRemoveVisible) {
 			this.request = request;
-			this.status = status;
 			this.isSubmitVisible = isSubmitVisible;
 			this.isApproveVisible = isApproveVisible;
 			this.isRemoveVisible = isRemoveVisible;
@@ -84,7 +81,7 @@ public class VacationRequestsController {
 			}
 
 			// Create list of request and visibility settings pairs
-			vacationRequests.add(new Request(request, request.Status__c, isSubmitVisible, isApproveVisible, isRemoveVisible));
+			vacationRequests.add(new Request(request, isSubmitVisible, isApproveVisible, isRemoveVisible));
 		}
 
 		return vacationRequests;
