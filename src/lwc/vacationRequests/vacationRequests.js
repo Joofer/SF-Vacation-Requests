@@ -31,8 +31,21 @@ export default class VacationRequests extends LightningElement {
     endDateField = REQUEST_ENDDATE_FIELD;
     managerField = REQUEST_MANAGER_FIELD;
 
+    // @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
+    // vacationRequests;
+
     @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
-    vacationRequests;
+    processUnits({data, error}){
+        if (data) {
+            this.vacationRequests = data.map(request => {
+                return {
+                    ...request,
+                    badgeStyle: (request.request.Status__c === 'New'? '.slds-badge': (request.request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
+                }
+            });
+            this.showSuccessMessage(badgeStyle, "");
+        }
+    }
 
     handleSuccess(event) {
         this.closeModalAddRequest();
@@ -154,19 +167,6 @@ export default class VacationRequests extends LightningElement {
                 this.showErrorMessage("Error", "Something went wrong when getting user's manager.");
                 this.error = error;
             });
-    }
-
-    @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
-    processUnits({data, error}){
-        if (data) {
-            this.vacationRequests.data = data.map(request => {
-                return {
-                    ...request,
-                    badgeStyle: (request.Status__c === 'New'? '.slds-badge': (request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
-                }
-            });
-            this.showSuccessMessage(badgeStyle, "");
-        }
     }
 
 }
