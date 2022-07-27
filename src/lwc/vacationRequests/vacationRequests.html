@@ -40,7 +40,7 @@
                     <template for:each={vacationRequests.data} for:item="requestItem">
                         <tr key={requestItem.request.Name} class="slds-hint-parent">
                             <td data-label="Number">
-                                <div class="slds-truncate" title="Number">{requestItem.request.Name}</div>
+                                <div class="slds-truncate" title="Number"><span class={requestItem.badgeStyle}>{requestItem.request.Name}</span></div>
                             </td>
                             <td data-label="Owner">
                                 <div class="slds-truncate" title="Owner">{requestItem.request.Owner.Name}</div>

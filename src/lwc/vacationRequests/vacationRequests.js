@@ -140,7 +140,6 @@ export default class VacationRequests extends LightningElement {
 
     @track userId = Id;
     @track userManager;
-    @track workingDays;
 
     getManager() {
         getUserManager({ userId: Id })
@@ -155,6 +154,18 @@ export default class VacationRequests extends LightningElement {
                 this.showErrorMessage("Error", "Something went wrong when getting user's manager.");
                 this.error = error;
             });
+    }
+
+    @wire(getVacationRequestList)
+    processUnits({data, error}){
+        if(data) {
+            this.vacationRequests = data.map(unit => {
+                return {
+                    ...unit,
+                    badgeStyle: (unit.Status__c === 'New'? '.slds-badge': (unit.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
+                }
+            });
+        }
     }
 
 }
