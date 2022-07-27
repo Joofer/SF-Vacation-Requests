@@ -43,6 +43,8 @@ export default class VacationRequests extends LightningElement {
                     badgeStyle: (request.request.Status__c === 'New'? '.slds-badge': (request.request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
                 }
             });
+        } else if (error) {
+            this.error = error;
         }
     }
 
