@@ -102,6 +102,7 @@ public class VacationRequestsController {
 				FROM User
 				WHERE Id = :userId
 				WITH SECURITY_ENFORCED
+				LIMIT 1
 		];
 	}
 
