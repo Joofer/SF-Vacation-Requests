@@ -10,12 +10,15 @@ public class VacationRequestsController {
 		public Boolean isApproveVisible { get; set; }
 		@AuraEnabled
 		public Boolean isRemoveVisible { get; set; }
+		@AuraEnabled
+		public String badgeStyle { get; set; }
 
-		public Request(Vacation_Request__c request, Boolean isSubmitVisible, Boolean isApproveVisible, Boolean isRemoveVisible) {
+		public Request(Vacation_Request__c request, Boolean isSubmitVisible, Boolean isApproveVisible, Boolean isRemoveVisible, String badgeStyle) {
 			this.request = request;
 			this.isSubmitVisible = isSubmitVisible;
 			this.isApproveVisible = isApproveVisible;
 			this.isRemoveVisible = isRemoveVisible;
+			this.badgeStyle = badgeStyle;
 		}
 	}
 
@@ -61,6 +64,7 @@ public class VacationRequestsController {
 		// Assign actions visibility settings for each request
 		for (Vacation_Request__c request : requests) {
 			Boolean isSubmitVisible, isApproveVisible, isRemoveVisible;
+			String badgeStyle;
 
 			if (request.Status__c == 'Submitted' || request.Status__c == 'Approved' || request.OwnerId != currentId) {
 				isSubmitVisible = false;
@@ -80,8 +84,11 @@ public class VacationRequestsController {
 				isRemoveVisible = true;
 			}
 
+			// Set badge style
+			badgeStyle = (request.Status__c == 'New'? '.slds-badge': (request.Status__c == 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'));
+
 			// Create list of request and visibility settings pairs
-			vacationRequests.add(new Request(request, isSubmitVisible, isApproveVisible, isRemoveVisible));
+			vacationRequests.add(new Request(request, isSubmitVisible, isApproveVisible, isRemoveVisible, badgeStyle));
 		}
 
 		return vacationRequests;

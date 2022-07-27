@@ -31,23 +31,8 @@ export default class VacationRequests extends LightningElement {
     endDateField = REQUEST_ENDDATE_FIELD;
     managerField = REQUEST_MANAGER_FIELD;
 
-    // @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
-    // vacationRequests;
-
     @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
-    processUnits({data, error}){
-        if (data) {
-            this.vacationRequests = data.map(request => {
-                return {
-                    ...request,
-                    badgeStyle: (request.request.Status__c === 'New'? '.slds-badge': (request.request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
-                }
-            });
-            let temp = this.vacationRequests;
-        } else if (error) {
-            this.error = error;
-        }
-    }
+    vacationRequests;
 
     handleSuccess(event) {
         this.closeModalAddRequest();
