@@ -38,12 +38,12 @@ export default class VacationRequests extends LightningElement {
     processUnits({data, error}){
         if (data) {
             this.vacationRequests = data.map(request => {
-                let style = (request.request.Status__c === 'New'? '.slds-badge': (request.request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'));
                 return {
                     ...request,
-                    badgeStyle: style
+                    badgeStyle: (request.request.Status__c === 'New'? '.slds-badge': (request.request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
                 }
             });
+            let temp = this.vacationRequests;
         } else if (error) {
             this.error = error;
         }
