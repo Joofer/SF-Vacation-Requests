@@ -159,10 +159,10 @@ export default class VacationRequests extends LightningElement {
     @wire(getVacationRequestList)
     processUnits({data, error}){
         if(data) {
-            this.vacationRequests = data.map(unit => {
+            this.vacationRequests = data.map(request => {
                 return {
-                    ...unit,
-                    badgeStyle: (unit.Status__c === 'New'? '.slds-badge': (unit.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
+                    ...request,
+                    badgeStyle: (request.Status__c === 'New'? '.slds-badge': (request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
                 }
             });
         }
