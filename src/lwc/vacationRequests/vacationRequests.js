@@ -156,15 +156,16 @@ export default class VacationRequests extends LightningElement {
             });
     }
 
-    @wire(getVacationRequestList)
+    @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
     processUnits({data, error}){
-        if(data) {
+        if (data) {
             this.vacationRequests.data = data.map(request => {
                 return {
                     ...request,
                     badgeStyle: (request.Status__c === 'New'? '.slds-badge': (request.Status__c === 'Submitted'? '.slds-badge .slds-theme_warning': '.slds-badge .slds-theme_success'))
                 }
             });
+            this.showSuccessMessage(badgeStyle, "");
         }
     }
 
