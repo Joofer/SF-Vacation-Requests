@@ -37,4 +37,60 @@ public class VacationRequestsControllerTests {
 		System.assertEquals(valid.ManagerId, userManager.ManagerId);
 	}
 
+	@IsTest static void submitRequest() {
+		Vacation_Request__c request = [
+				SELECT Name, Status__c
+				FROM Vacation_Request__c
+				WHERE Status__c = 'New'
+				LIMIT 1
+		];
+		Integer id;
+
+		System.assert(VacationRequestsController.submitVacationRequest(request.Name));
+
+		String statusAfter = [
+				SELECT Status__c
+				FROM Vacation_Request__c
+				WHERE Name = :id
+				LIMIT 1
+		].Status__c;
+
+		System.assertEquals('Submitted', statusAfter);
+	}
+
+	@IsTest static void approveRequest() {
+		Vacation_Request__c request = [
+				SELECT Name, Status__c
+				FROM Vacation_Request__c
+				WHERE Status__c = 'Submitted'
+				LIMIT 1
+		];
+		Integer id;
+
+		System.assert(VacationRequestsController.approveVacationRequest(request.Name));
+
+		String statusAfter = [
+				SELECT Status__c
+				FROM Vacation_Request__c
+				WHERE Name = :id
+				LIMIT 1
+		].Status__c;
+
+		System.assertEquals('Approved', statusAfter);
+	}
+
+	@IsTest static void removeRequest() {
+		Vacation_Request__c requestId = [
+				SELECT Name
+				FROM Vacation_Request__c
+				LIMIT 1
+		];
+		Integer sizeBefore = [ SELECT Id FROM Vacation_Request__c ].size();
+
+		System.assert(VacationRequestsController.removeVacationRequest(requestId.Name));
+
+		Integer sizeAfter = [ SELECT Id FROM Vacation_Request__c ].size();
+
+		System.assertEquals(sizeBefore - 1, sizeAfter);
+	}
 }
