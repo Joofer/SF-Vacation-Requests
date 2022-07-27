@@ -38,13 +38,13 @@ public class VacationRequestsControllerTests {
 	}
 
 	@IsTest static void submitRequest() {
-		Vacation_Request__c request = [
+		List<Vacation_Request__c> request = [
 				SELECT Name, Status__c
 				FROM Vacation_Request__c
 				WHERE Status__c = 'New'
 				LIMIT 1
 		];
-		String id = request.Name;
+		String id = request[0].Name;
 
 		System.assert(VacationRequestsController.submitVacationRequest(request.Name));
 
