@@ -17,7 +17,6 @@ import REQUEST_OBJECT from '@salesforce/schema/Vacation_Request__c';
 import REQUEST_REQUESTTYPE_FIELD from '@salesforce/schema/Vacation_Request__c.RequestType__c';
 import REQUEST_STARTDATE_FIELD from '@salesforce/schema/Vacation_Request__c.StartDate__c';
 import REQUEST_ENDDATE_FIELD from '@salesforce/schema/Vacation_Request__c.EndDate__c';
-import REQUEST_WORKINGDAYS_FIELD from '@salesforce/schema/Vacation_Request__c.WorkingDays__c';
 import REQUEST_MANAGER_FIELD from '@salesforce/schema/Vacation_Request__c.Manager__c';
 
 export default class VacationRequests extends LightningElement {
@@ -30,7 +29,6 @@ export default class VacationRequests extends LightningElement {
     typeField = REQUEST_REQUESTTYPE_FIELD;
     startDateField = REQUEST_STARTDATE_FIELD;
     endDateField = REQUEST_ENDDATE_FIELD;
-    workingDaysField = REQUEST_WORKINGDAYS_FIELD;
     managerField = REQUEST_MANAGER_FIELD;
 
     @wire(getVacationRequestList, { isOnlyMy: '$isOnlyMyRequests' })
@@ -142,6 +140,7 @@ export default class VacationRequests extends LightningElement {
 
     @track userId = Id;
     @track userManager;
+    @track workingDays;
 
     getManager() {
         getUserManager({ userId: Id })
