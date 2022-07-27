@@ -44,7 +44,7 @@ public class VacationRequestsControllerTests {
 				WHERE Status__c = 'New'
 				LIMIT 1
 		];
-		Integer id;
+		String id = request.Name;
 
 		System.assert(VacationRequestsController.submitVacationRequest(request.Name));
 
@@ -65,7 +65,7 @@ public class VacationRequestsControllerTests {
 				WHERE Status__c = 'Submitted'
 				LIMIT 1
 		];
-		Integer id;
+		String id = request.Name;
 
 		System.assert(VacationRequestsController.approveVacationRequest(request.Name));
 
