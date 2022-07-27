@@ -96,7 +96,7 @@ public class VacationRequestsController {
 
 	// Get user name by Id
 	@AuraEnabled(cacheable=true)
-	public static List<User> getUserName(String userId) {
+	public static User getUserName(String userId) {
 		return [
 				SELECT Name
 				FROM User
